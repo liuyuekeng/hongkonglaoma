@@ -1,0 +1,9 @@
+{
+    "name" : "hongkonglaoma",
+    "description" : "a simpal blog",
+    "version" : "0.0.1",
+    "author" : "liuyuekeng",
+    "dependencies" : {
+        "express" : "*"
+    }
+}

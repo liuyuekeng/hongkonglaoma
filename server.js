@@ -10,21 +10,26 @@ var MongoClient = mongo.MongoClient;
 var bdconf = require('./conf/db.conf');
 //db
 var dbmodles = require('./modles/DB_blog.js')
+var db = new MongoDb('blog', new MongoServer(bdconf.local.host, bdconf.local.port));
+console.log(dbmodles.User(db));
 
+//======================路由==========================
 //静态文件
-//app.use("/statics", express.static( __dirname + "/public" ));
-
+app.use("/statics", express.static( __dirname + "/statics" ));
 
 app.get("/", function (req, res) {
     res.send("Hellow world!");
 });
 
+app.get("/login", function (req, res) {
+    res.sendfile(__dirname + "/html/login.html");
+});
+
 app.get("/hongkonglaoma", function (req, res) {
     res.send('香港老妈');
 });
+//======================路由 end==========================
 
-var db = new MongoDb('blog', new MongoServer(bdconf.local.host, bdconf.local.port));
-console.log(dbmodles.User(db));
 /*var testCollection = db.collection('blog', {strict: true});
 testCollection.insert({"title": "test"}, function (err, data) {
     if (err) {

@@ -9,13 +9,10 @@ var LoginTitle = React.createClass({
 var LoginInput = React.createClass({
     render: function () {
         return(
-            <form>
-                <label for="usernameInput">username: </label>
-                <input type="text" id="usernameInput" />
-                <br />
-                <label for="passwdInput">pass word: </label>
-                <input type="text" id="passwdInput"/>
-            </form>
+            <div class="inputItem">
+                <label for="{this.props.react_id}">{this.props.label}: </label>
+                <input type="text" id="{this.props.react_id}" />
+            </div>
         )
     }
 });
@@ -28,12 +25,36 @@ var LoginWarning = React.createClass({
     }
 });
 
+var LoginBtn = React.createClass({
+    render: function () {
+        return(
+            <div>LOGIN</div>
+        )
+    }
+});
+
+var SigupBtn = React.createClass({
+    render: function () {
+        return(
+            <div>SIGUP</div>
+        )
+    }
+})
+
+
 var LoginBox = React.createClass({
     render: function () {
         return(
             <div class="login-box">
                 <LoginTitle />
-                <LoginInput />
+                <form>
+                    <LoginInput react_id="usernameInput" label="user name"/>
+                    <br />
+                    <LoginInput react_id="passwordInput" label="pass word"/>
+                </form>
+                <LoginWarning />
+                <LoginBtn />
+                <SigupBtn />
             </div>
         )
     }

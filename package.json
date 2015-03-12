@@ -5,6 +5,7 @@
     "author" : "liuyuekeng",
     "dependencies" : {
         "express" : "*",
-        "mongoskin" : "*"
+        "mongoskin" : "*",
+        "requirejs" : "*"
     }
 }

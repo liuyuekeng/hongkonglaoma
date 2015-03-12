@@ -1,4 +1,4 @@
-define(function () {
+define('login_box.js',[],function () {
     var LoginTitle = React.createClass({displayName: "LoginTitle",
         render: function () {
             return(
@@ -74,3 +74,8 @@ define(function () {
         LoginBox : LoginBox
     }
 });
+
+define('login_main',['login_box.js'], function(box){
+    console.log(box);
+});
+

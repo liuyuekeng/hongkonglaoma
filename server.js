@@ -25,6 +25,9 @@ app.get("/login", function (req, res) {
     res.sendfile(__dirname + "/html/login.html");
 });
 
+app.get("/api", function (req, res) {
+});
+
 app.get("/hongkonglaoma", function (req, res) {
     res.send('香港老妈');
 });

@@ -60,10 +60,6 @@ define('login_box.js',[],function () {
             )
         }
     });
-    React.render(
-        React.createElement(LoginBox, null),
-        document.getElementById('login-box')
-    );
 
     return {
         LoginTitle : LoginTitle,
@@ -76,6 +72,9 @@ define('login_box.js',[],function () {
 });
 
 define('login_main',['login_box.js'], function(box){
-    console.log(box);
+    React.render(
+        React.createElement(box.LoginBox, null),
+        document.getElementById('login-box')
+    );
 });
 

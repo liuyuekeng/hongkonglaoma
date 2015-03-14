@@ -1,3 +1,6 @@
 define(['login_box.js'], function(box){
-    console.log(box);
+    React.render(
+        <box.LoginBox />,
+        document.getElementById('login-box')
+    );
 });

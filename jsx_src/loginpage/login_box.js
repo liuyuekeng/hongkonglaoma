@@ -60,10 +60,6 @@ define(function () {
             )
         }
     });
-    React.render(
-        <LoginBox />,
-        document.getElementById('login-box')
-    );
 
     return {
         LoginTitle : LoginTitle,

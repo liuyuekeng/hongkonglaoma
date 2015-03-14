@@ -9,9 +9,9 @@ var MongoClient = mongo.MongoClient;
 //conf
 var bdconf = require('./conf/db.conf');
 //db
-var dbmodles = require('./modles/DB_blog.js')
+var db_users = require('./modles/DB_users.js')
 var db = new MongoDb('blog', new MongoServer(bdconf.local.host, bdconf.local.port));
-console.log(dbmodles.User(db));
+console.log(db_users.User(db));
 
 //======================路由==========================
 //静态文件

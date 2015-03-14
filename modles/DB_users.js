@@ -18,11 +18,19 @@ var User = function (db) {
     var removeUser = function (username) {
         collection.remove({username: username})
     };
-    var modPasswd = function () {
+    var modPasswd = function (username, passwd) {
+        collection.update(
+            {'username' : username},
+            {'$set' : {'passwd' : passwd}}
+        );
     };
-    var getUser = function () {
+    var getUserByUsername = function (username) {
+        var ret = collection.findOne({'username' : username});
+        return ret;
     };
-    var authentication = function () {
+    var authentication = function (username, passwd) {
+        var ret = collection.findOne({'username' : username, 'passwd' : passwd});
+        return ret;
     }
     return {
         "collection": collection,

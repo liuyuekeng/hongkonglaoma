@@ -9,10 +9,13 @@ var MongoClient = mongo.MongoClient;
 //conf
 var bdconf = require('./conf/db.conf');
 //db
-var db_users = require('./modles/DB_users.js')
 var db = new MongoDb('blog', new MongoServer(bdconf.local.host, bdconf.local.port));
-console.log(db_users.User(db));
-
+/*
+db.bind('users');
+db.users.findOne(function(err, data){
+    console.log(data);
+});
+*/
 //======================路由==========================
 //静态文件
 app.use("/statics", express.static( __dirname + "/statics" ));
@@ -25,7 +28,15 @@ app.get("/login", function (req, res) {
     res.sendfile(__dirname + "/html/login.html");
 });
 
-app.get("/api", function (req, res) {
+app.get("/api/*", function (req, res, next) {
+    req.db = db;
+    next();
+});
+
+var userApi = require("./actions/user_api.js");
+app.use("/api/user", userApi);
+app.get("/api/test", function (req, res) {
+    res.send('hello');
 });
 
 app.get("/hongkonglaoma", function (req, res) {

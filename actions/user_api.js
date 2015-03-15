@@ -30,7 +30,7 @@ userApi.use(initDbObj);
 userApi.get('/login', function(req, res){
     req.db_users.authentication(req.query.username, req.query.passwd, res);
 });
-userApi.get('/sigin', function(req, res){
+userApi.get('/sigup', function(req, res){
     req.db_users.creatUser(req.query.username, req.query.passwd, res);
 });
 /*

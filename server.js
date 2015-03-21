@@ -10,11 +10,7 @@ var MongoClient = mongo.MongoClient;
 var bdconf = require('./conf/db.conf');
 //db
 var db = new MongoDb('blog', new MongoServer(bdconf.local.host, bdconf.local.port));
-/*
-db.bind('users');
-db.users.findOne(function(err, data){
-    console.log(data);
-});
+
 */
 //======================路由==========================
 //静态文件

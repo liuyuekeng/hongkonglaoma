@@ -3,6 +3,10 @@ var User = function (db) {
         db.bind("users");
     }
     var users = db.users;
+    var getUserById = function (id) {
+        var ret = users.findOne({"_id" : id});
+        return ret;
+    }
     var creatUser = function (username, passwd, res) {
         users.insert(
             {
@@ -27,25 +31,13 @@ var User = function (db) {
         );
     };
 
-    var authentication = function (username, passwd, res) {
-        users.findOne({'username' : username, 'passwd' : passwd}, function (err, ret) {
-            if (ret) {
-                res.json({
-                    mongo_err: err,
-                    message: 'authentication sucess'
-                });
-            } else {
-                res.json({
-                    mongo_err: err,
-                    err: 'NO_RESULT',
-                    message: 'authentication fail'
-                });
-            }
-        });
+    var authentication = function (username, passwd, callback) {
+        users.findOne({'username' : username, 'passwd' : passwd}, callback);
     }
     return {
         "users" : users,
         "creatUser" : creatUser,
+        "getUserById" : getUserById,
         "removeUser" : removeUser,
         "modPasswd" : modPasswd,
         "authentication" : authentication

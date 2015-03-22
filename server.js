@@ -1,6 +1,8 @@
 //express
 var express = require("express");
 var app = express();
+//cookie
+var cookieParser = require('cookie-parser');
 //mongo
 var mongo = require("mongoskin");
 var MongoServer = mongo.Server;
@@ -11,7 +13,6 @@ var bdconf = require('./conf/db.conf');
 //db
 var db = new MongoDb('blog', new MongoServer(bdconf.local.host, bdconf.local.port));
 
-*/
 //======================路由==========================
 //静态文件
 app.use("/statics", express.static( __dirname + "/statics" ));
@@ -19,6 +20,12 @@ app.use("/statics", express.static( __dirname + "/statics" ));
 app.get("/", function (req, res) {
     res.send("Hellow world!");
 });
+
+app.use(cookieParser('RSYNK4KF1N4DDIA6'));
+
+app.all("*", function (req, res, next) {
+    next();
+})
 
 app.get("/login", function (req, res) {
     res.sendfile(__dirname + "/html/login.html");

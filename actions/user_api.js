@@ -23,15 +23,33 @@ function initDbObj (req, res, next) {
     }
 }
 
-userApi.use(userParamsValidate);
-
 userApi.use(initDbObj);
 
+userApi.use(userParamsValidate);
+
 userApi.get('/login', function(req, res){
-    req.db_users.authentication(req.query.username, req.query.passwd, res);
+    function loginCallback (err, ret) {
+        if (ret) {
+            req.authenticaJson = {
+                mongo_err: err,
+                message: 'authentication success'
+            }
+            //保持登陆
+            res.cookie('username', ret._id, {signed: true});
+        } else {
+            req.authenticaJson = {
+                mongo_err: err,
+                err: 'NO_RESULT',
+                message: 'authentication fail'
+            }
+        }
+        console.log(req.signedCookies.username);
+        res.json(req.authenticaJson);
+    }
+    req.db_users.authentication(req.query.username, req.query.passwd, loginCallback);
 });
 userApi.get('/sigup', function(req, res){
-    req.db_users.creatUser(req.query.username, req.query.passwd, res);
+    req.db_users.creatUser(req.query.username, req.query.passwd, req);
 });
 /*
 userApi.get('/modpasswd', function(req, res){

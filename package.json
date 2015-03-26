@@ -7,6 +7,7 @@
         "express" : "*",
         "cookie-parser" : "*",
         "mongoskin" : "*",
-        "requirejs" : "*"
+        "requirejs" : "*",
+        "MD5" : "*"
     }
 }

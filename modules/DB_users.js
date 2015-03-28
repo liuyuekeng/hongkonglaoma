@@ -1,12 +1,16 @@
+/**users表结构
+ * passwd
+ * username
+ * _id
+ */
 var md5 = require('MD5');
 var User = function (db) {
     if (!db.users) {
         db.bind("users");
     }
     var users = db.users;
-    var getUserById = function (id) {
-        var ret = users.findOne({"_id" : id});
-        return ret;
+    var getUserById = function (id, callback) {
+        users.findOne({"_id" : id}, callback);
     }
     var creatUser = function (username, passwd, res) {
         users.insert(

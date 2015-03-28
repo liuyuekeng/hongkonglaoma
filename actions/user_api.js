@@ -35,7 +35,7 @@ userApi.get('/login', function(req, res){
                 message: 'authentication success'
             }
             //保持登陆
-            res.cookie('username', ret._id, {signed: true});
+            res.cookie('userId', ret._id, {signed: true});
         } else {
             req.authenticaJson = {
                 mongo_err: err,
@@ -48,10 +48,10 @@ userApi.get('/login', function(req, res){
     }
     req.db_users.authentication(req.query.username, req.query.passwd, loginCallback);
 });
+/*
 userApi.get('/sigup', function(req, res){
     req.db_users.creatUser(req.query.username, req.query.passwd, req);
 });
-/*
 userApi.get('/modpasswd', function(req, res){
     req.db_users.modPasswd(req.query.username, req.query.passwd, res);
 });

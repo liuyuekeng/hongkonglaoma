@@ -13,6 +13,7 @@ var bdconf = require('./conf/db.conf');
 //db
 var db = new MongoDb('blog', new MongoServer(bdconf.local.host, bdconf.local.port));
 
+
 //======================路由==========================
 //静态文件
 app.use("/statics", express.static( __dirname + "/statics" ));
@@ -21,26 +22,28 @@ app.get("/", function (req, res) {
     res.send("Hellow world!");
 });
 
+//预处理
 app.use(cookieParser('RSYNK4KF1N4DDIA6'));
-
-app.all("*", function (req, res, next) {
+app.get("*", function (req, res, next) {
+    req.db = db;
+    req.helper = {
+        toObjectID : mongo.helper.toObjectID,
+    }
     next();
-})
+});
 
+//登陆页面
 app.get("/login", function (req, res) {
     res.sendfile(__dirname + "/html/login.html");
 });
 
-app.get("/api/*", function (req, res, next) {
-    req.db = db;
-    next();
-});
-
+//userApi
 var userApi = require("./actions/user_api.js");
 app.use("/api/user", userApi);
-app.get("/api/test", function (req, res) {
-    res.send('hello');
-});
+
+//已登陆验证
+var ifLogin = require('./middlewares/ifLogin.js')
+app.use('*', ifLogin);
 
 app.get("/hongkonglaoma", function (req, res) {
     res.send('香港老妈');

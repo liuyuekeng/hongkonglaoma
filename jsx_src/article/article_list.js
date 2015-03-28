@@ -1,4 +1,4 @@
-define(function(){
+define(['common/page_tag'], function(pageTag){
     // 文章列表项
     var ArticleListItem = React.createClass({
         handleClick: function(ev){
@@ -22,22 +22,8 @@ define(function(){
         }
     });
 
-    // 分页
-    var PageTag = React.createClass({
-    });
-
     // 文章列表
     var ArticleList = React.createClass({
-        componentDidMount: function(){
-            this.state.List = [
-                {
-                    title: 'test1',
-                    content: 'test1`s content'
-                }
-            ];
-        },
-        getArticles: function(){
-        },
         render: function(){
             var listItem = this.props.data.map(function(article){
                 return(
@@ -53,4 +39,23 @@ define(function(){
             );
         }
     });
+
+    var Articles = React.createClass({
+        componentDidMount: function(){
+            // 文章列表
+            this.state.articleList = [
+            ];
+            // 当前页
+            this.state.selectedPage = 1;
+            // 总页数
+            this.state.totalPage = this.state.articleList.length / 5 + 1;
+        },
+        render: function(){
+            return(
+                <ArticleList />
+                <PageTag total={this.state.totalPage}   />
+            )
+        }
+    });
+
 })

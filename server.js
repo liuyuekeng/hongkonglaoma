@@ -45,6 +45,15 @@ app.use("/api/user", userApi);
 var ifLogin = require('./middlewares/ifLogin.js')
 app.use('*', ifLogin);
 
+//文章页面
+app.get('/article/item', function (req, res) {
+    res.sendfile(__dirname + '/html/article_item.html');
+})
+
+//articleApi
+var articleApi = require('./actions/article_api.js');
+app.use("/api/article", articleApi);
+
 app.get("/hongkonglaoma", function (req, res) {
     res.send('香港老妈');
 });

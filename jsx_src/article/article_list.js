@@ -13,7 +13,7 @@ define(['common/page_tag'], function(pageTag){
             }
             return(
                 <div class="article-list-item">
-                    <h2 class="article-list-item-title" onClick{this.handleClick}=>{this.props.data.title}</h2>
+                    <h2 class="article-list-item-title" onClick={this.handleClick}>{this.props.data.title}</h2>
                     <div class="article-list-item-excerpt">
                       {content}
                     </div>
@@ -53,7 +53,7 @@ define(['common/page_tag'], function(pageTag){
         render: function(){
             return(
                 <ArticleList />
-                <PageTag total={this.state.totalPage}   />
+                <PageTag total={this.state.totalPage}></PageTag>
             )
         }
     });

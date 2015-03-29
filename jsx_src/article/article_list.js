@@ -52,8 +52,10 @@ define(['common/page_tag'], function(pageTag){
         },
         render: function(){
             return(
-                <ArticleList />
-                <PageTag total={this.state.totalPage}></PageTag>
+                <div className="component-articles">
+                    <ArticleList />
+                    <PageTag total={this.state.totalPage}></PageTag>
+                </div>
             )
         }
     });

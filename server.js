@@ -26,6 +26,7 @@ app.get("/", function (req, res) {
 app.use(cookieParser('RSYNK4KF1N4DDIA6'));
 app.get("*", function (req, res, next) {
     req.db = db;
+    // 通用方法
     req.helper = {
         toObjectID : mongo.helper.toObjectID,
     }

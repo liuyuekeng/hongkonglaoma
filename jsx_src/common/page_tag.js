@@ -22,6 +22,11 @@ define(function(){
                     );
                 }
             }
+            return(
+                <ul className="common-pagetag">
+                    {tags}
+                </ul>
+            );
         }
     });
 

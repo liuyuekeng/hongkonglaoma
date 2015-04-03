@@ -23,4 +23,4 @@ define(function(require, exports, module){
         xmlhttp.send(_method === "POST" ? _data : null);
     }
     module.exports = ajax;
-})
+});

@@ -120,8 +120,8 @@ define('lib/ajax',['require','exports','module'],function(require, exports, modu
         xmlhttp.send(_method === "POST" ? _data : null);
     }
     module.exports = ajax;
-})
-;
+});
+
 require(['loginpage/login_box', 'lib/ajax'], function(box, ajax){
     React.render(
         React.createElement(box.LoginBox, null),

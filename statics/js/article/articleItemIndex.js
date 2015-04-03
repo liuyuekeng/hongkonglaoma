@@ -23,19 +23,40 @@ define('lib/ajax',['require','exports','module'],function(require, exports, modu
         xmlhttp.send(_method === "POST" ? _data : null);
     }
     module.exports = ajax;
-})
-;
-define('article/article_content.js',['require','exports','module','lib/ajax'],function (require, exports, module) {
+});
+
+define('lib/util',['require','exports','module'],function (require, exports, module) {
+    /**
+     * 辅助函数
+     * query parse
+     */
+    exports.queryParse = function () {
+        var searchStr = location.search;
+        if (!searchStr) {
+            return false;
+        }
+        searchStr = searchStr.slice(1);
+        var queryObj = {};
+        var searchArr = searchStr.split('&');
+        var searchItem;
+        for (var i = searchArr.length - 1; i > -1; i --) {
+            searchItem = searchArr[i].split('=');
+            queryObj[searchItem[0]] = searchItem[1];
+        }
+        return queryObj;
+    }
+});
+
+define('article/article_content.js',['require','exports','module','lib/ajax','lib/util'],function (require, exports, module) {
     var ajax = require('lib/ajax');
+    var util = require('lib/util');
     var articleDetail = React.createClass({displayName: "articleDetail",
         getInitData : function () {
-        },
-        getInitialState: function () {
-            return {articleItemData: {}};
-        },
-        componentDidMount : function () {
+            var queryObj = util.queryParse();
             ajax(
-                '/api/article/item',
+                '/api/article/item' + (
+                    (queryObj && queryObj.id) ?
+                    '?id=' + queryObj.id : ""),
                 {
                     method: 'get',
                     success: function (data) {
@@ -43,6 +64,12 @@ define('article/article_content.js',['require','exports','module','lib/ajax'],fu
                     }
                 }
             );
+        },
+        getInitialState: function () {
+            return {articleItemData: {}};
+        },
+        componentDidMount : function () {
+            this.getInitData();
         },
         render: function () {
             return(
@@ -73,7 +100,6 @@ require(['article/article_content.js'], function (content) {
         React.createElement(content.articleDetail, {titleText: "test", contentText: "content test", creatTime: "2015-3-28", modifyTime: "2015-3-28"}),
         document.body
     );
-    window.ajax = ajax;
 });
 
 define("article/article_item_main", function(){});

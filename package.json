@@ -8,6 +8,7 @@
         "cookie-parser" : "*",
         "mongoskin" : "*",
         "requirejs" : "*",
-        "MD5" : "*"
+        "MD5" : "*",
+        "body-parser" : "*"
     }
 }

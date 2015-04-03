@@ -1,8 +1,8 @@
 /**检查参数是否合法
  * paramsCheckSetting = {
  *   get: {
- *     id: {        get参数中检查id字段
- *       regexp     用于检查的正则
+ *     id: {                    get参数中检查id字段
+ *       regexp : RegExp obj    用于检查的正则
  *     }
  *   },
  *   post: {},

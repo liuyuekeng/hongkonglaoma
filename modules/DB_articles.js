@@ -19,6 +19,13 @@ var Article = function (db) {
         var ret = articles.findOne({'_id' : articleId});
         return ret;
     }
+    // 获取文章列表，接受两个参数
+    // page: 页码
+    // length: 每页数量
+    var getArticlesList = function(page, length){
+        var ret = articles.find().limit(length).skip(page*length);
+        return ret;
+    }
     var addArticle = function (userId) {
     }
     var modArticleByArticleId = function (articleId, articleObj) {
@@ -29,6 +36,7 @@ var Article = function (db) {
     return {
         'articles' : articles,
         'getArticlesByUserId' : getArticlesByUserId,
+        'getArticlesList' : getArticlesList,
         'addArticle' : addArticleByUserId,
         'modArticleByArticleId' : modArticleByArticleId,
         'delArticleByArticleId' : delArticleByArticleId

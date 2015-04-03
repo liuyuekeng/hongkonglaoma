@@ -22,6 +22,11 @@ define(function(){
                     );
                 }
             }
+            return(
+                React.createElement("ul", {className: "common-pagetag"}, 
+                    tags
+                )
+            );
         }
     });
 

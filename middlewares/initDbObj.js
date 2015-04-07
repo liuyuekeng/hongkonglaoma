@@ -5,14 +5,18 @@
  *      injectName : str
  * }
  */
-var setting;
 
 var initSetting = function (obj) {
-    setting = obj;
-    return initDbObj;
+    var initDbObj = new InitDbObj(obj);
+    return initDbObj.excute.bind(initDbObj);
 };
 
-var initDbObj = function (req, res, next) {
+var InitDbObj = function (setting) {
+    this.setting = setting;
+}
+
+InitDbObj.prototype.excute = function (req, res, next) {
+    var setting = this.setting;
     if (!(setting && setting.moduleName && setting.injectName)) {
         res.status(500).json({
             err: "missing setting when useing initDbObj middleware"
@@ -30,4 +34,5 @@ var initDbObj = function (req, res, next) {
     }
     next();
 }
+
 module.exports = initSetting;

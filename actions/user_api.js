@@ -12,20 +12,25 @@ function userParamsValidate (req, res, next) {
     }
 }
 
-function initDbObj (req, res, next) {
-    if (!req.db) {
-        res.status(500).json({
-            err : 'missing db in req'
-        });
-    } else {
-        req.db_users = DB_users(req.db);
-        next();
+var InitDbObj = require('../middlewares/initDbObj.js');
+
+userApi.use(new InitDbObj({
+    moduleName: 'DB_users',
+    injectName: 'db_users'
+}));
+
+var paramsCheck = require('../middlewares/paramsCheck.js');
+
+userApi.use('/login', paramsCheck({
+    get : {
+        username : {
+            regexp : /\w+/
+        },
+        passwd : {
+            regexp : /\w+/
+        }
     }
-}
-
-userApi.use(initDbObj);
-
-userApi.use(userParamsValidate);
+}));
 
 userApi.get('/login', function(req, res){
     function loginCallback (err, ret) {
@@ -43,7 +48,6 @@ userApi.get('/login', function(req, res){
                 message: 'authentication fail'
             }
         }
-        console.log(req.signedCookies.username);
         res.json(req.authenticaJson);
     }
     req.db_users.authentication(req.query.username, req.query.passwd, loginCallback);

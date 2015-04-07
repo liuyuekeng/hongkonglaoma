@@ -1,9 +1,13 @@
 var express = require('express');
 var articleApi = express();
-var DB_articles = require('../modules/DB_articles.js');
 var paramsCheck = require('../middlewares/paramsCheck.js');
 
-articleApi.use
+var initDbObj = require('../middlewares/initDbObj.js');
+
+articleApi.use(initDbObj({
+    moduleName: 'DB_articles',
+    injectName: 'db_articles'
+}));
 
 articleApi.use('/item', paramsCheck({
     get : {
@@ -13,20 +17,8 @@ articleApi.use('/item', paramsCheck({
     }
 }));
 
-function initDbObj (req, res, next){
-    if (!req.db) {
-        res.status(500).json({
-            err : 'missing db in req'
-        });
-    } else {
-        req.db_article = DB_articles(req.db);
-        next();
-    }
-}
-
-articleApi.use(initDbObj);
-
 articleApi.get('/item', function (req, res) {
+    console.log(req.db_articles);
     res.send('article item');
 });
 
@@ -34,6 +26,6 @@ articleApi.get('/list', function (req, res){
     var page = req.query.page;      // 页码
     var length = req.length.length; // 每页大小
     
-    res.json(req.db_article.getArticlesList(page, length));
+    res.json(req.db_articles.getArticlesList(page, length));
 });
 module.exports = articleApi;

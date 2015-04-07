@@ -37,7 +37,7 @@ var Article = function (db) {
         'articles' : articles,
         'getArticlesByUserId' : getArticlesByUserId,
         'getArticlesList' : getArticlesList,
-        'addArticle' : addArticleByUserId,
+        'addArticle' : addArticle,
         'modArticleByArticleId' : modArticleByArticleId,
         'delArticleByArticleId' : delArticleByArticleId
     };

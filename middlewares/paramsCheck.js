@@ -12,10 +12,17 @@
  * 使用方式app.user('xxxx', export(paramsCheckSetting));
  */
 
-var paramsCheckSetting;
+var initSetting = function (obj) {
+    var paramsCheck = new ParamsCheck(obj);
+    return paramsCheck.excute.bind(paramsCheck);
+}
 
-var paramsCheck = function (req, res, next) {
-    var settings = paramsCheckSetting;
+var ParamsCheck = function (settings) {
+    this.settings = settings;
+}
+
+ParamsCheck.prototype.excute = function (req, res, next) {
+    var settings = this.settings;
     if (!settings) {
         res.json({
             err: 'missing params check setting',
@@ -74,10 +81,5 @@ var paramsCheck = function (req, res, next) {
         return true;
     }
 };
-
-var initSetting = function (obj) {
-    paramsCheckSetting = obj;
-    return paramsCheck;
-}
 
 module.exports = initSetting;

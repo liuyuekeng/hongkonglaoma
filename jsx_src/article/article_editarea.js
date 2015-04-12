@@ -1,20 +1,38 @@
 define(function (require, exports, module) {
-    var inputArea = React.createClass({
+    var InputArea = React.createClass({
+        handleChange: function () {
+            var str = this.refs['input'].getDOMNode().value;
+            console.log(str);
+        },
+        render: function () {
+            return (
+            <textarea
+                ref='input'
+                onChange={this.handleChange}
+            ></textarea>
+            );
+        }
+    });
+    var ShowArea = React.createClass({
         render: function () {
             return (
             <textarea></textarea>
             );
         }
     });
-    var markdownArea = React.createClass({
+    var EditArea = React.createClass({
         render: function () {
             return (
-            <textarea></textarea>
+                <div class="editarea">
+                    <InputArea/>
+                    <ShowArea/>
+                </div>
             );
         }
     });
     return {
-        inputArea : inputArea,
-        markdownArea : markdownArea
+        InputArea : InputArea,
+        ShowArea : ShowArea,
+        EditArea: EditArea
     };
 });

@@ -52,7 +52,12 @@ app.use('*', ifLogin);
 //文章页面
 app.get('/article/item', function (req, res) {
     res.sendfile(__dirname + '/html/article_item.html');
-})
+});
+
+//文章编辑页面
+app.get('/article/edit', function (req, res) {
+    res.sendfile(__dirname + '/html/article_edit.html');
+});
 
 //articleApi
 var articleApi = require('./actions/article_api.js');

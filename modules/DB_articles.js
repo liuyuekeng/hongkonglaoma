@@ -26,7 +26,8 @@ var Article = function (db) {
         var ret = articles.find().limit(length).skip(page*length);
         return ret;
     }
-    var addArticle = function (userId) {
+    var addArticle = function (insertObj, callback) {
+        articles.insert(insertObj, callback);
     }
     var modArticleByArticleId = function (articleId, articleObj) {
     }

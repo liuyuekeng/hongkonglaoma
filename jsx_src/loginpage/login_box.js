@@ -48,7 +48,7 @@ define(function () {
             ajax(
                 '/api/user/login?username=' + state.username + '&passwd=' + state.password,
                 {
-                    method: 'get',
+                    method: 'GET',
                     success: function (data) {
                         var JSONData = JSON.parse(data);
                         var messageObj = {};

@@ -1,10 +1,11 @@
 define(function (require, exports, module) {
     /**
      * 辅助函数
-     * query parse
+     * queryParse
+     * queryBuild
      */
-    exports.queryParse = function () {
-        var searchStr = location.search;
+    exports.queryParse = function (str) {
+        var searchStr = str ? str : location.search;
         if (!searchStr) {
             return false;
         }
@@ -17,5 +18,15 @@ define(function (require, exports, module) {
             queryObj[searchItem[0]] = searchItem[1];
         }
         return queryObj;
+    }
+    exports.queryBuild = function (obj) {
+        var queryStr = ""
+        for (item in obj) {
+            if (obj.hasOwnProperty(item)) {
+                queryStr += (item + "=" + obj[item] + "&");
+            }
+        }
+        queryStr = queryStr.substring(0, queryStr.length - 1);
+        return queryStr;
     }
 });

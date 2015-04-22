@@ -26,8 +26,8 @@ app.get("/", function (req, res) {
 
 //预处理
 app.use(cookieParser('RSYNK4KF1N4DDIA6'));              //cookie签名秘钥
-app.use(bodyParser.urlencoded({ extended: false }));    //post参数解析
-app.get("*", function (req, res, next) {
+app.use(bodyParser.urlencoded({ extended: true }));    //post参数解析
+app.all("*", function (req, res, next) {
     req.db = db;
     // 通用方法
     req.helper = {

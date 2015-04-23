@@ -12,34 +12,31 @@ articleApi.use(initDbObj({
 articleApi.use('/item', paramsCheck({
     get: {
         id: {
-            regexp: /\w+/
+            regexp: /\w{24}/
         }
     }
 }));
 
 articleApi.get('/item', function (req, res) {
-    console.log(req.db_articles);
-    res.send('article item');
-});
-
-articleApi.use('/edit', paramsCheck({
-    post: {
-        title: {
-            regexp: /\w+/
-        },
-        content: {
-            regexp: /.+/
-        },
-        articleId: {
-            regexp: /.+/
-        },
-        userId: {
-            regexp: /.+/
+    function callback (err, ret) {
+        if (ret) {
+            res.json({
+                err: 0,
+                message: 'get article success',
+                ret: ret
+            });
+        } else {
+            res.json({
+                mongo_err: err,
+                err: 'NO_RESULT',
+                message: 'get article failed'
+            });
         }
     }
-}));
 
-articleApi.post('/edit', function (req, res) {
+    req.db_articles.getArticle(
+        req.helper.toObjectID(req.query.id),
+        callback);
 });
 
 articleApi.use('/new', paramsCheck({
@@ -93,6 +90,34 @@ articleApi.use('/up', paramsCheck({
         }
     }
 }));
+
+articleApi.use('/up', function (req, res) {
+    function callback (err, ret) {
+        if (ret) {
+            res.json({
+                err: 0,
+                message: 'update article success',
+                ret: ret
+            });
+        } else {
+            res.json({
+                mongo_err: err,
+                err: 'NO_RESULT',
+                message: 'update article failed'
+            });
+        }
+    }
+    
+    req.db_articles.modArticle(
+        req.helper.toObjectID(req.body.articleId),
+        req.userId,
+        {
+            title: req.body.title,
+            content: req.body.content,
+            tags: req.body.tags ? req.body.tags.split(',') : [],
+            private: req.body.private
+        }, callback);
+});
 
 articleApi.get('/list', function (req, res){
     var page = req.query.page;      // 页码

@@ -15,8 +15,8 @@ var Article = function (db) {
         var ret = articles.find({'autherId' : userId});
         return ret;
     }
-    var getArticleByArticleId = function (articleId) {
-        var ret = articles.findOne({'_id' : articleId});
+    var getArticle = function (articleId, callback) {
+        var ret = articles.findOne({'_id' : articleId}, callback);
         return ret;
     }
     // 获取文章列表，接受两个参数
@@ -29,18 +29,26 @@ var Article = function (db) {
     var addArticle = function (insertObj, callback) {
         articles.insert(insertObj, callback);
     }
-    var modArticleByArticleId = function (articleId, articleObj) {
+    var modArticle = function (articleId, userId, articleObj, callback) {
+        articles.update(
+            {
+                '_id': articleId,
+                'autherId': userId
+            },
+            {'$set': articleObj},
+            callback
+        );
     }
-    var delArticleByArticleId = function (articleId) {
+    var delArticle = function (articleId) {
         articles.remove({'_id' : articleId});
     }
     return {
         'articles' : articles,
-        'getArticlesByUserId' : getArticlesByUserId,
+        'getArticle' : getArticle,
         'getArticlesList' : getArticlesList,
         'addArticle' : addArticle,
-        'modArticleByArticleId' : modArticleByArticleId,
-        'delArticleByArticleId' : delArticleByArticleId
+        'modArticle' : modArticle,
+        'delArticle' : delArticle
     };
 }
 module.exports = Article;

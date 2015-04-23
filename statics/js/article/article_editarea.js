@@ -16,12 +16,14 @@ define(function (require, exports, module) {
             React.createElement("div", {className: "input-arear"}, 
                 React.createElement("input", {
                     ref: "title", 
-                    onChange: this.handleTitleChange
+                    onChange: this.handleTitleChange, 
+                    value: this.props.title
                 }), 
                 React.createElement("br", null), 
                 React.createElement("textarea", {
                     ref: "content", 
-                    onChange: this.handleContetChange
+                    onChange: this.handleContetChange, 
+                    value: this.props.content
                 })
             )
             );
@@ -58,8 +60,11 @@ define(function (require, exports, module) {
                 articleId: '',
             };
         },
-        getArticleData: function () {
-
+        componentDidMount: function () {
+            if (urlParams.id) {
+                //编辑文章时获取初始数据
+                this.getArtile(urlParams.id);
+            }
         },
         onInput: function (key, val) {
             var stateObj = {};
@@ -76,7 +81,7 @@ define(function (require, exports, module) {
             }
             if (urlParams.id) {
                 //修改
-                this.upArticle(title, content, [], false);
+                this.upArticle(urlParams.id, title, content, [], false);
             } else {
                 //新建
                 this.newArticle(title, content, [], false);
@@ -97,8 +102,8 @@ define(function (require, exports, module) {
                     },
                     success: function (data) {
                         var JSONData = JSON.parse(data);
-                        if (data.err) {
-                            alert("submit falied: " + data.message);
+                        if (JSONData.err) {
+                            alert("submit falied: " + JSONData.message);
                         } else {
                             alert("submit success!");
                         }
@@ -108,13 +113,14 @@ define(function (require, exports, module) {
                 }
             );
         },
-        upArticle: function () {
+        upArticle: function (articleId, title, content, tags, private) {
             var self = this;
             ajax(
-                '/api/article/new',
+                '/api/article/up',
                 {
                     method: 'POST',
                     data: {
+                        articleId: articleId,
                         title: title,
                         content: content,
                         tags: tags.join(','),
@@ -122,21 +128,41 @@ define(function (require, exports, module) {
                     },
                     success: function (data) {
                         var JSONData = JSON.parse(data);
-                        if (data.err) {
-                            alert("submit falied: " + data.message);
+                        if (JSONData.err) {
+                            alert("update falied: " + JSONData.message);
                         } else {
-                            alert("submit success!");
+                            alert("update success!");
                         }
-                        self.setState({'articleId': JSONData.ret[0]._id});
                     }
                 }
             )
         },
-        getArtile: function () {},
+        getArtile: function (articleId) {
+            var self = this;
+            ajax(
+                '/api/article/item?id=' + articleId,
+                {
+                    method: 'GET',
+                    success: function (data) {
+                        var JSONData = JSON.parse(data);
+                        if (JSONData.err) {
+                            alert(JSONData.message);
+                        } else {
+                            self.onInput('title', JSONData.ret.title);
+                            self.onInput('content', JSONData.ret.content);
+                        }
+                    }
+                }
+            );
+        },
         render: function () {
             return (
                 React.createElement("div", {class: "editarea"}, 
-                    React.createElement(InputArea, {onInput: this.onInput}), 
+                    React.createElement(InputArea, {
+                        onInput: this.onInput, 
+                        title: this.state.title, 
+                        content: this.state.content}
+                        ), 
                     React.createElement(ShowArea, {
                         title: this.state.titleMD, 
                         content: this.state.contentMD}), 

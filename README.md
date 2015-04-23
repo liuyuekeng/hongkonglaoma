@@ -1,1 +1,20 @@
-to do
+路由
+===============
+###page
+####登陆页面
+/login
+####文章编辑页
+/article/edit
+####文章列表页
+/article/item
+###API
+####登陆
+/api/user/login
+####文章信息
+/api/article/item
+####创建文章
+/api/article/new
+####更新文章
+/api/article/up
+####文章列表
+/api/article/list

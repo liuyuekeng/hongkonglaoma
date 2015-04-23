@@ -93,19 +93,7 @@ articleApi.use('/up', paramsCheck({
 
 articleApi.use('/up', function (req, res) {
     function callback (err, ret) {
-        if (ret) {
-            res.json({
-                err: 0,
-                message: 'update article success',
-                ret: ret
-            });
-        } else {
-            res.json({
-                mongo_err: err,
-                err: 'NO_RESULT',
-                message: 'update article failed'
-            });
-        }
+        alert('done');
     }
     
     req.db_articles.modArticle(

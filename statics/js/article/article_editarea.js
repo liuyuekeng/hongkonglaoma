@@ -129,7 +129,7 @@ define(function (require, exports, module) {
                     success: function (data) {
                         var JSONData = JSON.parse(data);
                         if (JSONData.err) {
-                            alert("update falied: " + JSONData.message);
+                            alert("update falied!");
                         } else {
                             alert("update success!");
                         }

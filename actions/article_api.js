@@ -93,7 +93,10 @@ articleApi.use('/up', paramsCheck({
 
 articleApi.use('/up', function (req, res) {
     function callback (err, ret) {
-        alert('done');
+        res.json({
+            err: 0,
+            message: 'done'
+        });
     }
     
     req.db_articles.modArticle(

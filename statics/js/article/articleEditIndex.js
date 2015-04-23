@@ -221,7 +221,7 @@ define('article/article_editarea.js',['require','exports','module','lib/ajax','l
                     success: function (data) {
                         var JSONData = JSON.parse(data);
                         if (JSONData.err) {
-                            alert("update falied: " + JSONData.message);
+                            alert("update falied!");
                         } else {
                             alert("update success!");
                         }

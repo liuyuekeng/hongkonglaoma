@@ -11,5 +11,5 @@ define(function(){
         }
     });
 
-    return Hearder;
+    return Header;
 });

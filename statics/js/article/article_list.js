@@ -1,11 +1,17 @@
-define(['common/page_tag'], function(pageTag){
+define(function(require, exports, module){
+
+    var ajax = require('lib/ajax');
+    var util = require('lib/util');
+
+    var PageTag = require('common/page_tag');
+
     // 文章列表项
     var ArticleListItem = React.createClass({displayName: "ArticleListItem",
         handleClick: function(ev){
-            location.pathname = '/articel/' + this.props.data._id;
+            console.log(ev);
         },
         render: function(){
-            var content = this.props.data.content;
+            var content = this.props.children;
             // 缩略标识
             var moreTag = content.indexOf('<!--more-->');
             if(moreTag != -1){
@@ -13,7 +19,7 @@ define(['common/page_tag'], function(pageTag){
             }
             return(
                 React.createElement("div", {class: "article-list-item"}, 
-                    React.createElement("h2", {class: "article-list-item-title", onClick: this.handleClick}, this.props.data.title), 
+                    React.createElement("h2", {class: "article-list-item-title", onClick: this.handleClick}, this.props.title), 
                     React.createElement("div", {class: "article-list-item-excerpt"}, 
                       content
                     )
@@ -41,23 +47,55 @@ define(['common/page_tag'], function(pageTag){
     });
 
     var Articles = React.createClass({displayName: "Articles",
+        getInitialState: function(){
+            return {
+                // 文章列表
+                articleList: [],
+                // 当前页
+                selectedPage: 1,
+                // 总页数
+                totalPage: 1
+            };
+        },
         componentDidMount: function(){
-            // 文章列表
-            this.state.articleList = [
-            ];
-            // 当前页
-            this.state.selectedPage = 1;
-            // 总页数
-            this.state.totalPage = this.state.articleList.length / 5 + 1;
+            var _this = this;
+            var queryObj = util.queryParse();
+            var page = queryObj.page || 0;
+            var length = queryObj.length || 5;
+
+            var url = 'api/article/list';
+            url += '?page=' + page + '&length=' + length;
+            ajax(
+                url,
+                {
+                    method: 'get',
+                    success: function (data) {
+                        var ret = JSON.parse(data);
+                        if(!ret.err){
+                            _this.setState({
+                                articleList: ret.data,
+                                selectedPage: page,
+                                totalPage: ret.data.length / length + 1
+                            });
+                        }
+                    }
+                }
+            )
+        },
+        handelChangePage: function(num){
+            console.log(num);
         },
         render: function(){
             return(
                 React.createElement("div", {className: "component-articles"}, 
-                    React.createElement(ArticleList, null), 
-                    React.createElement(PageTag, {total: this.state.totalPage})
+                    React.createElement(ArticleList, {data: this.state.articleList}), 
+                    React.createElement(PageTag, {total: this.state.totalPage, handelPageTagClick: this.handelChangePage})
                 )
             )
         }
     });
 
+    return {
+        Articles: Articles
+    }
 })

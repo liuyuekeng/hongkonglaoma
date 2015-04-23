@@ -1,3 +1,95 @@
+define('lib/ajax',['require','exports','module'],function(require, exports, module){
+    /**
+     * suport setting
+     *  method
+     *  success
+     *  data
+     */
+    function ajax (url, setting) {
+        //默认参数
+        var defaultObj = {
+            method: "GET",
+            success: function () {
+                return;
+            },
+            data: null,
+            contentType: {
+                "POST": "application/x-www-form-urlencoded"
+            }
+        };
+
+        //参数整理
+        var xmlhttp = new XMLHttpRequest();
+        var _method = setting.method ? setting.method.toLocaleUpperCase() : defaultObj.method;
+        var _success = (setting.success && typeof setting.success === "function") ? setting.success : defaultObj.success;
+        var dataObj = setting.data ? setting.data : false;
+        var _data = "";
+        if (dataObj) {
+            for (item in dataObj) {
+                if (dataObj.hasOwnProperty(item)) {
+                    _data += (item + "=" + dataObj[item] + "&");
+                }
+            }
+            _data = _data.substring(0, _data.length - 1);
+        } else {
+            _data = defaultObj.data;
+        }
+        var _contentType = setting.contentType ? setting.contentType : false;
+        if (!_contentType && defaultObj.contentType[_method]) {
+            _contentType = defaultObj.contentType[_method];
+        }
+
+        //发送请求
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200)
+            {
+                _success(xmlhttp.responseText);
+            }
+        }
+
+        xmlhttp.open(_method, url, true);
+
+        if (_contentType) {
+            xmlhttp.setRequestHeader("Content-Type", _contentType); 
+        }
+        xmlhttp.send(_data);
+    }
+    module.exports = ajax;
+});
+
+define('lib/util',['require','exports','module'],function (require, exports, module) {
+    /**
+     * 辅助函数
+     * queryParse
+     * queryBuild
+     */
+    exports.queryParse = function (str) {
+        var searchStr = str ? str : location.search;
+        if (!searchStr) {
+            return false;
+        }
+        searchStr = searchStr.slice(1);
+        var queryObj = {};
+        var searchArr = searchStr.split('&');
+        var searchItem;
+        for (var i = searchArr.length - 1; i > -1; i --) {
+            searchItem = searchArr[i].split('=');
+            queryObj[searchItem[0]] = searchItem[1];
+        }
+        return queryObj;
+    }
+    exports.queryBuild = function (obj) {
+        var queryStr = ""
+        for (item in obj) {
+            if (obj.hasOwnProperty(item)) {
+                queryStr += (item + "=" + obj[item] + "&");
+            }
+        }
+        queryStr = queryStr.substring(0, queryStr.length - 1);
+        return queryStr;
+    }
+});
+
 define('common/page_tag',[],function(){
     /*
      *  分页组件
@@ -5,8 +97,8 @@ define('common/page_tag',[],function(){
      *  handelPageTagClick 传入一个参数，为被点击的页数
      */
     var PageTag = React.createClass({displayName: "PageTag",
-        handleClick: function(num){
-            this.props.handelPageTagClick(num);
+        handleClick: function(ev){
+            this.props.handelPageTagClick(ev);
         },
         render: function(){
             var _this = this;
@@ -14,7 +106,7 @@ define('common/page_tag',[],function(){
             for(var i=0; i<=this.props.total; i++){
                 if(i == _this.props.selected){
                     tags.push(
-                        React.createElement("li", {className: "selected", onClick: _this.handleClick(i)}, i+1)
+                        React.createElement("li", {className: "selected", onClick: _this.handleClick}, i+1)
                     );
                 }else{
                     tags.push(
@@ -33,14 +125,20 @@ define('common/page_tag',[],function(){
     return PageTag;
 });
 
-define('article/article_list.js',['common/page_tag'], function(pageTag){
+define('article/article_list.js',['require','exports','module','lib/ajax','lib/util','common/page_tag'],function(require, exports, module){
+
+    var ajax = require('lib/ajax');
+    var util = require('lib/util');
+
+    var PageTag = require('common/page_tag');
+
     // 文章列表项
     var ArticleListItem = React.createClass({displayName: "ArticleListItem",
         handleClick: function(ev){
-            location.pathname = '/articel/' + this.props.data._id;
+            console.log(ev);
         },
         render: function(){
-            var content = this.props.data.content;
+            var content = this.props.children;
             // 缩略标识
             var moreTag = content.indexOf('<!--more-->');
             if(moreTag != -1){
@@ -48,7 +146,7 @@ define('article/article_list.js',['common/page_tag'], function(pageTag){
             }
             return(
                 React.createElement("div", {class: "article-list-item"}, 
-                    React.createElement("h2", {class: "article-list-item-title", onClick: this.handleClick}, this.props.data.title), 
+                    React.createElement("h2", {class: "article-list-item-title", onClick: this.handleClick}, this.props.title), 
                     React.createElement("div", {class: "article-list-item-excerpt"}, 
                       content
                     )
@@ -76,25 +174,57 @@ define('article/article_list.js',['common/page_tag'], function(pageTag){
     });
 
     var Articles = React.createClass({displayName: "Articles",
+        getInitialState: function(){
+            return {
+                // 文章列表
+                articleList: [],
+                // 当前页
+                selectedPage: 1,
+                // 总页数
+                totalPage: 1
+            };
+        },
         componentDidMount: function(){
-            // 文章列表
-            this.state.articleList = [
-            ];
-            // 当前页
-            this.state.selectedPage = 1;
-            // 总页数
-            this.state.totalPage = this.state.articleList.length / 5 + 1;
+            var _this = this;
+            var queryObj = util.queryParse();
+            var page = queryObj.page || 0;
+            var length = queryObj.length || 5;
+
+            var url = 'api/article/list';
+            url += '?page=' + page + '&length=' + length;
+            ajax(
+                url,
+                {
+                    method: 'get',
+                    success: function (data) {
+                        var ret = JSON.parse(data);
+                        if(!ret.err){
+                            _this.setState({
+                                articleList: ret.data,
+                                selectedPage: page,
+                                totalPage: ret.data.length / length + 1
+                            });
+                        }
+                    }
+                }
+            )
+        },
+        handelChangePage: function(num){
+            console.log(num);
         },
         render: function(){
             return(
                 React.createElement("div", {className: "component-articles"}, 
-                    React.createElement(ArticleList, null), 
-                    React.createElement(PageTag, {total: this.state.totalPage})
+                    React.createElement(ArticleList, {data: this.state.articleList}), 
+                    React.createElement(PageTag, {total: this.state.totalPage, handelPageTagClick: this.handelChangePage})
                 )
             )
         }
     });
 
+    return {
+        Articles: Articles
+    }
 })
 ;
 define('common/header.js',[],function(){
@@ -110,10 +240,14 @@ define('common/header.js',[],function(){
         }
     });
 
-    return Hearder;
+    return Header;
 });
 
 require(['article/article_list.js', 'common/header.js'], function(list, header){
+    React.render(
+        React.createElement(list.Articles, null),
+        document.getElementById('content')
+    );
 });
 
 define("article/article_list_main", function(){});

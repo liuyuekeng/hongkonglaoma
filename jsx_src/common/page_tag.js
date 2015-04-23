@@ -5,8 +5,8 @@ define(function(){
      *  handelPageTagClick 传入一个参数，为被点击的页数
      */
     var PageTag = React.createClass({
-        handleClick: function(num){
-            this.props.handelPageTagClick(num);
+        handleClick: function(ev){
+            this.props.handelPageTagClick(ev);
         },
         render: function(){
             var _this = this;
@@ -14,7 +14,7 @@ define(function(){
             for(var i=0; i<=this.props.total; i++){
                 if(i == _this.props.selected){
                     tags.push(
-                        <li className="selected" onClick={_this.handleClick(i)}>{i+1}</li>
+                        <li className="selected" onClick={_this.handleClick}>{i+1}</li>
                     );
                 }else{
                     tags.push(

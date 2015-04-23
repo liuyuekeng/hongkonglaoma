@@ -19,13 +19,34 @@ var Article = function (db) {
         var ret = articles.findOne({'_id' : articleId}, callback);
         return ret;
     }
+
     // 获取文章列表，接受两个参数
-    // page: 页码
+    // page: 页码，从0 开始
     // length: 每页数量
-    var getArticlesList = function(page, length){
-        var ret = articles.find().limit(length).skip(page*length);
-        return ret;
+    var getArticlesList = function(page, length, callback){
+        articles.find().toArray(function(err,data){
+            if(!err){
+                var total = data.length;
+                // 参数合法检测
+                if( !isNaN(page) && !isNaN(length) && page>=0 && length>0){
+                    // 页码过大检测
+                    if( page*length < total ){
+                        callback(
+                           err,
+                           data.slice( page*length, (page+1)*length<total?(page+1)*length:total )
+                        );
+                    }else{
+                        callback('no enough articles');
+                    }
+                }else{
+                    callback('illegal params');
+                }
+            }else{
+                callback(err,data);
+            }
+        });
     }
+
     var addArticle = function (insertObj, callback) {
         articles.insert(insertObj, callback);
     }

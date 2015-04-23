@@ -121,8 +121,15 @@ articleApi.use('/up', function (req, res) {
 
 articleApi.get('/list', function (req, res){
     var page = req.query.page;      // 页码
-    var length = req.length.length; // 每页大小
+    var length = req.query.length; // 每页大小
     
-    res.json(req.db_articles.getArticlesList(page, length));
+    var ret = req.db_articles.getArticlesList(
+        page, length,
+        function(err, data){
+            res.json({
+                err: err,
+                data: data
+            });
+    });
 });
 module.exports = articleApi;

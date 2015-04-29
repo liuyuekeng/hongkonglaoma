@@ -110,6 +110,17 @@ articleApi.use('/up', function (req, res) {
         }, callback);
 });
 
+articleApi.use('/list', paramsCheck({
+    get: {
+        page:{
+            regexp: /\d*/
+        },
+        length:{
+            regexp: /\d*/
+        }
+    }
+}));
+
 articleApi.get('/list', function (req, res){
     var page = req.query.page;      // 页码
     var length = req.query.length; // 每页大小

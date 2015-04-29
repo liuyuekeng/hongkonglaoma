@@ -11,36 +11,53 @@ var Article = function (db) {
         db.bind('articles');
     }
     var articles = db.articles;
+
+    // 分页函数
+    // data: array 文章数组
+    // page: int 页码
+    // length: int 每页数量
+    var articlesPaging = function (data, page, length){
+        var total = data.length;
+        if ( (page-1) * length <=  total ){
+            if ( page * length <= total ){
+                return {
+                    'err': null,
+                    'data': data.slice((page-1) * length, page * length)
+                }
+            }else{
+                return {
+                    'err': null,
+                    'data': data.slice((page-1) * length)
+                }
+            }
+        }else{
+            return {'err': 'no enough articles.'}
+        }
+    };
+
+    // 条件过滤函数
+    // data: array 文章数组
+    // filter: {autherName: 'xxx', tag: ['xx', 'xx']}
+    var articlesFilter = function (data, filter){
+    };
+
     var getArticlesByUserId = function (userId) {
         var ret = articles.find({'autherId' : userId});
         return ret;
-    }
+    };
     var getArticle = function (articleId, callback) {
         var ret = articles.findOne({'_id' : articleId}, callback);
         return ret;
-    }
+    };
 
     // 获取文章列表，接受两个参数
-    // page: 页码，从0 开始
-    // length: 每页数量
+    // page: number 页码
+    // length: 每页长度
     var getArticlesList = function(page, length, callback){
         articles.find().toArray(function(err,data){
             if(!err){
-                var total = data.length;
-                // 参数合法检测
-                if( !isNaN(page) && !isNaN(length) && page>=0 && length>0){
-                    // 页码过大检测
-                    if( page*length < total ){
-                        callback(
-                           err,
-                           data.slice( page*length, (page+1)*length<total?(page+1)*length:total )
-                        );
-                    }else{
-                        callback('no enough articles');
-                    }
-                }else{
-                    callback('illegal params');
-                }
+                var pagedCollection = articlesPaging(data, page, length);
+                callback(pagedCollection.err, pagedCollection.data);
             }else{
                 callback(err,data);
             }

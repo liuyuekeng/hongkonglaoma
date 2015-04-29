@@ -98,19 +98,18 @@ define('common/page_tag',[],function(){
      */
     var PageTag = React.createClass({displayName: "PageTag",
         handleClick: function(ev){
-            this.props.handelPageTagClick(ev);
+            this.props.handelPageTagClick(ev.target.innerHTML);
         },
         render: function(){
-            var _this = this;
             var tags = [];
-            for(var i=0; i<=this.props.total; i++){
-                if(i == _this.props.selected){
+            for(var i=1; i<=this.props.total; i++){
+                if(i == this.props.selected){
                     tags.push(
-                        React.createElement("li", {className: "selected", onClick: _this.handleClick}, i+1)
+                        React.createElement("li", {className: "selected", onClick: this.handleClick, key: i}, i)
                     );
                 }else{
                     tags.push(
-                        React.createElement("li", {onClick: _this.handleClick(i)}, i+1)
+                        React.createElement("li", {onClick: this.handleClick, key: i}, i)
                     );
                 }
             }
@@ -158,9 +157,9 @@ define('article/article_list.js',['require','exports','module','lib/ajax','lib/u
     // 文章列表
     var ArticleList = React.createClass({displayName: "ArticleList",
         render: function(){
-            var listItem = this.props.data.map(function(article){
+            var listItem = this.props.data.map(function(article, index){
                 return(
-                    React.createElement(ArticleListItem, {title: article.title, author: article.author}, 
+                    React.createElement(ArticleListItem, {title: article.title, author: article.author, key: index}, 
                         article.content
                     )
                 );
@@ -187,7 +186,7 @@ define('article/article_list.js',['require','exports','module','lib/ajax','lib/u
         componentDidMount: function(){
             var _this = this;
             var queryObj = util.queryParse();
-            var page = queryObj.page || 0;
+            var page = queryObj.page || 1;
             var length = queryObj.length || 5;
 
             var url = 'api/article/list';
@@ -210,13 +209,17 @@ define('article/article_list.js',['require','exports','module','lib/ajax','lib/u
             )
         },
         handelChangePage: function(num){
-            console.log(num);
+            if(parseInt(num) != parseInt(this.state.selectedPage)){
+                this.setState({
+                    page: parseInt(num)
+                });
+            }
         },
         render: function(){
             return(
                 React.createElement("div", {className: "component-articles"}, 
                     React.createElement(ArticleList, {data: this.state.articleList}), 
-                    React.createElement(PageTag, {total: this.state.totalPage, handelPageTagClick: this.handelChangePage})
+                    React.createElement(PageTag, {total: this.state.totalPage, handelPageTagClick: this.handelChangePage, selected: this.state.selectedPage})
                 )
             )
         }

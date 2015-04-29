@@ -31,9 +31,9 @@ define(function(require, exports, module){
     // 文章列表
     var ArticleList = React.createClass({
         render: function(){
-            var listItem = this.props.data.map(function(article){
+            var listItem = this.props.data.map(function(article, index){
                 return(
-                    <ArticleListItem title={article.title} author={article.author}>
+                    <ArticleListItem title={article.title} author={article.author} key={index}>
                         {article.content}
                     </ArticleListItem>
                 );
@@ -60,7 +60,7 @@ define(function(require, exports, module){
         componentDidMount: function(){
             var _this = this;
             var queryObj = util.queryParse();
-            var page = queryObj.page || 0;
+            var page = queryObj.page || 1;
             var length = queryObj.length || 5;
 
             var url = 'api/article/list';
@@ -83,13 +83,17 @@ define(function(require, exports, module){
             )
         },
         handelChangePage: function(num){
-            console.log(num);
+            if(parseInt(num) != parseInt(this.state.selectedPage)){
+                this.setState({
+                    page: parseInt(num)
+                });
+            }
         },
         render: function(){
             return(
                 <div className="component-articles">
                     <ArticleList data={this.state.articleList} />
-                    <PageTag total={this.state.totalPage} handelPageTagClick={this.handelChangePage}></PageTag>
+                    <PageTag total={this.state.totalPage} handelPageTagClick={this.handelChangePage} selected={this.state.selectedPage} />
                 </div>
             )
         }

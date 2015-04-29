@@ -6,19 +6,18 @@ define(function(){
      */
     var PageTag = React.createClass({
         handleClick: function(ev){
-            this.props.handelPageTagClick(ev);
+            this.props.handelPageTagClick(ev.target.innerHTML);
         },
         render: function(){
-            var _this = this;
             var tags = [];
-            for(var i=0; i<=this.props.total; i++){
-                if(i == _this.props.selected){
+            for(var i=1; i<=this.props.total; i++){
+                if(i == this.props.selected){
                     tags.push(
-                        <li className="selected" onClick={_this.handleClick}>{i+1}</li>
+                        <li className="selected" onClick={this.handleClick} key={i}>{i}</li>
                     );
                 }else{
                     tags.push(
-                        <li onClick={_this.handleClick(i)}>{i+1}</li>
+                        <li onClick={this.handleClick} key={i}>{i}</li>
                     );
                 }
             }

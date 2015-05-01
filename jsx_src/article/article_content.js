@@ -24,17 +24,17 @@ define(function (require, exports, module) {
         },
         render: function () {
             return(
-            <div class="article-wraper">
-                <div class="article-title">
+            <div className="article-wraper">
+                <div className="article-title">
                     <h1>{this.props.titleText}</h1>
                 </div>
-                <p class="article-content">
+                <p className="article-content">
                     {this.props.contentText}
                 </p>
-                <div class="creat-time">
+                <div className="creat-time">
                     {this.props.creatTime}
                 </div>
-                <div class="modify-time">
+                <div className="modify-time">
                     {this.props.modifyTime}
                 </div>
             </div>

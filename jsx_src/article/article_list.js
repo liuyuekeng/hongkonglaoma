@@ -18,9 +18,9 @@ define(function(require, exports, module){
               content = content.slice(0,moreTag);
             }
             return(
-                <div class="article-list-item">
-                    <h2 class="article-list-item-title" onClick={this.handleClick}>{this.props.title}</h2>
-                    <div class="article-list-item-excerpt">
+                <div className="article-list-item">
+                    <h2 className="article-list-item-title" onClick={this.handleClick}>{this.props.title}</h2>
+                    <div className="article-list-item-excerpt">
                       {content}
                     </div>
                 </div>
@@ -39,7 +39,7 @@ define(function(require, exports, module){
                 );
             });
             return(
-                <div class="article-list">
+                <div className="article-list">
                     {listItem}
                 </div>
             );

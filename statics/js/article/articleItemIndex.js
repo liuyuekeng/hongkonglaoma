@@ -116,17 +116,17 @@ define('article/article_content.js',['require','exports','module','lib/ajax','li
         },
         render: function () {
             return(
-            React.createElement("div", {class: "article-wraper"}, 
-                React.createElement("div", {class: "article-title"}, 
+            React.createElement("div", {className: "article-wraper"}, 
+                React.createElement("div", {className: "article-title"}, 
                     React.createElement("h1", null, this.props.titleText)
                 ), 
-                React.createElement("p", {class: "article-content"}, 
+                React.createElement("p", {className: "article-content"}, 
                     this.props.contentText
                 ), 
-                React.createElement("div", {class: "creat-time"}, 
+                React.createElement("div", {className: "creat-time"}, 
                     this.props.creatTime
                 ), 
-                React.createElement("div", {class: "modify-time"}, 
+                React.createElement("div", {className: "modify-time"}, 
                     this.props.modifyTime
                 )
             )

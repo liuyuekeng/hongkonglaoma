@@ -1,0 +1,57 @@
+body,
+div,
+input,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+  font: 11px "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  color: #555555;
+}
+input {
+  background: #fff;
+}
+.title {
+  font-weight: 100;
+  color: #353535;
+}
+.title.title1 {
+  font-size: 45px;
+  margin-bottom: 0.3em;
+}
+.inputItem input {
+  font-size: 18px;
+}
+.inputItem label {
+  display: inline-block;
+  width: 6em;
+  font-size: 18px;
+}
+.btn {
+  display: inline-block;
+  font-size: 14px;
+  padding: 4px 8px;
+  margin-right: 8px;
+  border: 1px #259dff solid;
+  color: #259dff;
+}
+.message {
+  font-size: 14px;
+  color: #259dff;
+}
+.message.red {
+  color: #ff2525;
+}
+.login-box {
+  position: absolute;
+  left: 50%;
+  width: 400px;
+  margin-left: -200px;
+  top: 50%;
+  height: 230px;
+  margin-top: -115px;
+}

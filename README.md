@@ -6,6 +6,8 @@
 ####文章编辑页
 /article/edit
 ####文章列表页
+/article
+####文章页面
 /article/item
 ###API
 ####登陆

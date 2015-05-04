@@ -4,6 +4,7 @@ define(function(require, exports, module){
     var util = require('lib/util');
 
     var PageTag = require('common/page_tag');
+    var TagSelector = require('common/tag_selector');
 
     // 文章列表项
     var ArticleListItem = React.createClass({
@@ -55,6 +56,10 @@ define(function(require, exports, module){
                 selectedPage: 1,
                 // 总页数
                 totalPage: 1
+                // 标签列表
+                tags: [],
+                // 被选中的标签列表
+                selectedTags: []
             };
         },
         componentDidMount: function(){

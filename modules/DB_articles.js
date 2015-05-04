@@ -37,8 +37,44 @@ var Article = function (db) {
 
     // 条件过滤函数
     // data: array 文章数组
-    // filter: {autherName: 'xxx', tag: ['xx', 'xx']}
+    // filter: {autherName: 'xxx', tags: ['xx', 'xx']}
     var articlesFilter = function (data, filter){
+        if(filter){
+            var result = [];
+            for(var i=0; i<data.length; i++){
+                var flag = true;
+                if(filter.autherName){
+                    if(data[i].autherName != filter.autherName){
+                        flag = false;
+                    }
+                }
+                if(filter.tags){
+                    for(var j=0; j<filter.tags.length; j++){
+                        // 如果文章中不存在过滤器中的标签，排除此文章
+                        if(!isInArray(data.tags, filter.tags[j])){
+                            flag = false;
+                            break;
+                        }
+                    }
+                }
+                if(flag){
+                    result.push(data[i]);
+                }
+            }
+            return result;
+        }else{
+            return data;
+        }
+    };
+
+    // 数组中是否存在某值
+    var isInArray = function (arr, val){
+        for(var i=0; i<arr.length; i++){
+            if(val === arr[i]){
+                return true;
+            }
+        }
+        return false;
     };
 
     var getArticlesByUserId = function (userId) {

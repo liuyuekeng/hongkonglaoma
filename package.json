@@ -5,7 +5,6 @@
     "author" : "liuyuekeng",
     "dependencies" : {
         "express" : "*",
-        "less": "*",
         "cookie-parser" : "*",
         "mongoskin" : "*",
         "requirejs" : "*",

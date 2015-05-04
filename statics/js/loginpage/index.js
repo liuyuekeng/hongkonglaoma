@@ -8,8 +8,8 @@ define('loginpage/login_box',[],function () {
         },
         render: function () {
             return(
-                React.createElement("div", {class: "inputItem"}, 
-                    React.createElement("label", {for: "{this.props.react_id}"}, this.props.label, ": "), 
+                React.createElement("div", {className: "inputItem"}, 
+                    React.createElement("label", {for: "{this.props.react_id}"}, this.props.label + " :"), 
                     React.createElement("input", {
                         type: "text", 
                         ref: this.props.react_ref, 
@@ -23,12 +23,13 @@ define('loginpage/login_box',[],function () {
     var LoginWarning = React.createClass({displayName: "LoginWarning",
         render: function () {
             var mark = "";
+            var content = "";
             var messageObj = this.props.message;
             if (messageObj.err) {
                 mark = "red";
             }
             return(
-                React.createElement("div", {className: mark}, messageObj.message)
+                React.createElement("div", {className: "message " + mark}, this.props.message)
             )
         }
     });
@@ -48,7 +49,7 @@ define('loginpage/login_box',[],function () {
             ajax(
                 '/api/user/login?username=' + state.username + '&passwd=' + state.password,
                 {
-                    method: 'GET',
+                    method: 'get',
                     success: function (data) {
                         var JSONData = JSON.parse(data);
                         var messageObj = {};
@@ -65,8 +66,8 @@ define('loginpage/login_box',[],function () {
         },
         render: function () {
             return(
-                React.createElement("div", {class: "login-box"}, 
-                    React.createElement("h1", null, "Login"), 
+                React.createElement("div", {className: "login-box"}, 
+                    React.createElement("h1", {className: "title title1"}, "Login"), 
                     React.createElement("form", {className: "loginFrom", method: "post", onSubmit: this.handleSubmit}, 
                         React.createElement(LoginInput, {
                             react_ref: "username", 
@@ -80,8 +81,12 @@ define('loginpage/login_box',[],function () {
                             label: "pass word", 
                             inputChangeHandler: this.inputChangeHandler}), 
                         React.createElement("br", null), 
-                        React.createElement("input", {type: "submit", value: "LOGIN"})
+                        React.createElement("input", {
+                            type: "submit", 
+                            className: "btn", 
+                            value: "LOGIN"})
                     ), 
+                    React.createElement("br", null), 
                     React.createElement(LoginWarning, {message: this.state.message})
                 )
             )
@@ -158,7 +163,7 @@ require(['loginpage/login_box', 'lib/ajax'], function(box, ajax){
     window.ajax = ajax;
     React.render(
         React.createElement(box.LoginBox, null),
-        document.getElementById('login-box')
+        document.body
     );
 });
 

@@ -18,9 +18,9 @@ define(function(require, exports, module){
               content = content.slice(0,moreTag);
             }
             return(
-                React.createElement("div", {class: "article-list-item"}, 
-                    React.createElement("h2", {class: "article-list-item-title", onClick: this.handleClick}, this.props.title), 
-                    React.createElement("div", {class: "article-list-item-excerpt"}, 
+                React.createElement("div", {className: "article-list-item"}, 
+                    React.createElement("h2", {className: "article-list-item-title", onClick: this.handleClick}, this.props.title), 
+                    React.createElement("div", {className: "article-list-item-excerpt"}, 
                       content
                     )
                 )
@@ -39,7 +39,7 @@ define(function(require, exports, module){
                 );
             });
             return(
-                React.createElement("div", {class: "article-list"}, 
+                React.createElement("div", {className: "article-list"}, 
                     listItem
                 )
             );

@@ -8,8 +8,8 @@ define(function () {
         },
         render: function () {
             return(
-                <div class="inputItem">
-                    <label for="{this.props.react_id}">{this.props.label}: </label>
+                <div className="inputItem">
+                    <label for="{this.props.react_id}">{this.props.label + " :"}</label>
                     <input
                         type="text"
                         ref={this.props.react_ref}
@@ -23,12 +23,13 @@ define(function () {
     var LoginWarning = React.createClass({
         render: function () {
             var mark = "";
+            var content = "";
             var messageObj = this.props.message;
             if (messageObj.err) {
                 mark = "red";
             }
             return(
-                <div className={mark}>{messageObj.message}</div>
+                <div className={"message " + mark}>{this.props.message}</div>
             )
         }
     });
@@ -48,7 +49,7 @@ define(function () {
             ajax(
                 '/api/user/login?username=' + state.username + '&passwd=' + state.password,
                 {
-                    method: 'GET',
+                    method: 'get',
                     success: function (data) {
                         var JSONData = JSON.parse(data);
                         var messageObj = {};
@@ -65,8 +66,8 @@ define(function () {
         },
         render: function () {
             return(
-                <div class="login-box">
-                    <h1>Login</h1>
+                <div className="login-box">
+                    <h1 className="title title1">Login</h1>
                     <form className="loginFrom" method="post" onSubmit={this.handleSubmit}>
                         <LoginInput 
                             react_ref="username"
@@ -80,8 +81,12 @@ define(function () {
                             label="pass word"
                             inputChangeHandler={this.inputChangeHandler}/>
                         <br />
-                        <input type="submit" value="LOGIN" />
+                        <input
+                            type="submit"
+                            className="btn"
+                            value="LOGIN" />
                     </form>
+                    <br />
                     <LoginWarning message={this.state.message} />
                 </div>
             )

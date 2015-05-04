@@ -144,9 +144,9 @@ define('article/article_list.js',['require','exports','module','lib/ajax','lib/u
               content = content.slice(0,moreTag);
             }
             return(
-                React.createElement("div", {class: "article-list-item"}, 
-                    React.createElement("h2", {class: "article-list-item-title", onClick: this.handleClick}, this.props.title), 
-                    React.createElement("div", {class: "article-list-item-excerpt"}, 
+                React.createElement("div", {className: "article-list-item"}, 
+                    React.createElement("h2", {className: "article-list-item-title", onClick: this.handleClick}, this.props.title), 
+                    React.createElement("div", {className: "article-list-item-excerpt"}, 
                       content
                     )
                 )
@@ -165,7 +165,7 @@ define('article/article_list.js',['require','exports','module','lib/ajax','lib/u
                 );
             });
             return(
-                React.createElement("div", {class: "article-list"}, 
+                React.createElement("div", {className: "article-list"}, 
                     listItem
                 )
             );

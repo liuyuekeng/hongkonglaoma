@@ -2,8 +2,8 @@ var exec = require('child_process').exec,
     path = require('path'),
     fs = require('fs')
 
-var less_dir = path.join(__dirname, "less_src", "login.less");
-var css_dir = path.join(__dirname, "statics/css", "login.css");
+var less_dir = path.join(__dirname, "less_src", "article.less");
+var css_dir = path.join(__dirname, "statics/css", "article.css");
 
 var jsx_dir = path.join(__dirname, "jsx_src");
 

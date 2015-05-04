@@ -1,16 +1,25 @@
 body,
 div,
 input,
+pre,
 h1,
 h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+ul,
+li,
+ol {
   margin: 0;
   padding: 0;
   font: 11px "Helvetica Neue", "Microsoft YaHei", sans-serif;
   color: #555555;
+}
+ol,
+ul,
+li {
+  list-style: none;
 }
 input {
   background: #fff;
@@ -18,10 +27,13 @@ input {
 .title {
   font-weight: 100;
   color: #353535;
+  margin-bottom: 0.5em;
 }
 .title.title1 {
   font-size: 45px;
-  margin-bottom: 0.3em;
+}
+.title.title2 {
+  font-size: 29px;
 }
 .inputItem input {
   font-size: 18px;
@@ -46,9 +58,13 @@ input {
   color: #fff;
   background: #259dff;
 }
-.btn.blue:active {
+.btn.blue:active,
+.btn.blue.selected {
   color: #fff;
   background: #1e73b8;
+}
+section {
+  margin-left: 3%;
 }
 .message {
   font-size: 14px;
@@ -57,12 +73,24 @@ input {
 .message.red {
   color: #ff2525;
 }
-.login-box {
-  position: absolute;
-  left: 50%;
-  width: 400px;
-  margin-left: -200px;
-  top: 50%;
-  height: 230px;
-  margin-top: -115px;
+.common-pagetag {
+  margin: 60px 3% 7%;
+}
+header {
+  height: 55px;
+  background: #eeeeee;
+  border-bottom: 1px #dddddd solid;
+}
+header .hongkonglaoma {
+  font-size: 25px;
+  margin-left: 3%;
+  line-height: 55px;
+  color: #259dff;
+}
+.article-list .article-list-item {
+  margin-top: 40px;
+}
+.article-list .article-list-item pre {
+  font-size: 14px;
+  line-height: 1.8;
 }

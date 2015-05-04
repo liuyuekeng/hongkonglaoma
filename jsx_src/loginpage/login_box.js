@@ -83,7 +83,7 @@ define(function () {
                         <br />
                         <input
                             type="submit"
-                            className="btn"
+                            className="btn blue"
                             value="LOGIN" />
                     </form>
                     <br />

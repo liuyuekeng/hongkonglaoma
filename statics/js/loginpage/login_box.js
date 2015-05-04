@@ -83,7 +83,7 @@ define(function () {
                         React.createElement("br", null), 
                         React.createElement("input", {
                             type: "submit", 
-                            className: "btn", 
+                            className: "btn blue", 
                             value: "LOGIN"})
                     ), 
                     React.createElement("br", null), 

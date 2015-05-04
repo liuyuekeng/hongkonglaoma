@@ -13,11 +13,11 @@ define(function(){
             for(var i=1; i<=this.props.total; i++){
                 if(i == this.props.selected){
                     tags.push(
-                        <li className="selected" onClick={this.handleClick} key={i}>{i}</li>
+                        <li className="selected btn blue" onClick={this.handleClick} key={i}>{i}</li>
                     );
                 }else{
                     tags.push(
-                        <li onClick={this.handleClick} key={i}>{i}</li>
+                        <li className="btn blue" onClick={this.handleClick} key={i}>{i}</li>
                     );
                 }
             }

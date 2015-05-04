@@ -4,6 +4,7 @@ define(function(require, exports, module){
     var util = require('lib/util');
 
     var PageTag = require('common/page_tag');
+    var TagSelector = require('common/tag_selector');
 
     // 文章列表项
     var ArticleListItem = React.createClass({displayName: "ArticleListItem",
@@ -19,8 +20,8 @@ define(function(require, exports, module){
             }
             return(
                 React.createElement("div", {className: "article-list-item"}, 
-                    React.createElement("h2", {className: "article-list-item-title", onClick: this.handleClick}, this.props.title), 
-                    React.createElement("div", {className: "article-list-item-excerpt"}, 
+                    React.createElement("h2", {className: "article-list-item-title title title2", onClick: this.handleClick}, this.props.title), 
+                    React.createElement("pre", {className: "article-list-item-excerpt"}, 
                       content
                     )
                 )
@@ -39,7 +40,7 @@ define(function(require, exports, module){
                 );
             });
             return(
-                React.createElement("div", {className: "article-list"}, 
+                React.createElement("section", {className: "article-list"}, 
                     listItem
                 )
             );
@@ -54,7 +55,11 @@ define(function(require, exports, module){
                 // 当前页
                 selectedPage: 1,
                 // 总页数
-                totalPage: 1
+                totalPage: 1,
+                // 标签列表
+                tags: [],
+                // 被选中的标签列表
+                selectedTags: []
             };
         },
         componentDidMount: function(){

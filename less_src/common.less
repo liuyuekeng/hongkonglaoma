@@ -3,9 +3,12 @@
 .title {
     font-weight: 100;
     color: @text-black-1;
+    margin-bottom: 0.5em;
     &.title1 {
         font-size: 45px;
-        margin-bottom: 0.3em;
+    }
+    &.title2 {
+        font-size: 29px;
     }
 }
 
@@ -25,8 +28,23 @@
     font-size: 14px;
     padding: 4px 8px;
     margin-right: 8px;
-    border: 1px @text-blue-1 solid;
-    color: @text-blue-1;
+    cursor: pointer;
+    &.blue {
+        border: 1px @text-blue-1 solid;
+        color: @text-blue-1;
+        &:hover {
+            color: #fff;
+            background: @text-blue-1;
+        }
+        &:active,&.selected {
+            color: #fff;
+            background: @text-blue-2;
+        }
+    }
+}
+
+section {
+    margin-left: @common-margin-left;
 }
 
 .message {

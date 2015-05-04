@@ -2,8 +2,8 @@ define(function(){
     var Header = React.createClass({
         render: function(){
             return (
-                <div className="common-header">
-                    <span>Hongkonglaoma</span>
+                <div>
+                    <span className="hongkonglaoma title">Hongkonglaoma</span>
                     <div className="common-header-user">
                     </div>
                 </div>

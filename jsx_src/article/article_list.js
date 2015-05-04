@@ -20,10 +20,10 @@ define(function(require, exports, module){
             }
             return(
                 <div className="article-list-item">
-                    <h2 className="article-list-item-title" onClick={this.handleClick}>{this.props.title}</h2>
-                    <div className="article-list-item-excerpt">
+                    <h2 className="article-list-item-title title title2" onClick={this.handleClick}>{this.props.title}</h2>
+                    <pre className="article-list-item-excerpt">
                       {content}
-                    </div>
+                    </pre>
                 </div>
             );
         }
@@ -40,9 +40,9 @@ define(function(require, exports, module){
                 );
             });
             return(
-                <div className="article-list">
+                <section className="article-list">
                     {listItem}
-                </div>
+                </section>
             );
         }
     });

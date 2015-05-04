@@ -49,6 +49,11 @@ app.use("/api/user", userApi);
 var ifLogin = require('./middlewares/ifLogin.js')
 app.use('*', ifLogin);
 
+//文章列表
+app.get('/article', function (req, res) {
+    res.sendfile(__dirname + '/html/article.html');
+});
+
 //文章页面
 app.get('/article/item', function (req, res) {
     res.sendfile(__dirname + '/html/article_item.html');

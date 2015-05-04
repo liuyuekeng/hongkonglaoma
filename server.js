@@ -13,7 +13,7 @@ var MongoClient = mongo.MongoClient;
 //conf
 var bdconf = require('./conf/db.conf');
 //db
-var db = new MongoDb('blog', new MongoServer(bdconf.local.host, bdconf.local.port));
+var db = new MongoDb('blog', new MongoServer(bdconf.remote.host, bdconf.remote.port));
 
 
 //======================路由==========================

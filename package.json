@@ -3,6 +3,10 @@
     "description" : "a simpal blog",
     "version" : "0.0.1",
     "author" : "liuyuekeng",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/liuyuekeng/hongkonglaoma.git"
+    },
     "dependencies" : {
         "express" : "*",
         "cookie-parser" : "*",

@@ -55,7 +55,7 @@ define(function(require, exports, module){
                 // 当前页
                 selectedPage: 1,
                 // 总页数
-                totalPage: 1
+                totalPage: 1,
                 // 标签列表
                 tags: [],
                 // 被选中的标签列表

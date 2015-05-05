@@ -77,6 +77,9 @@ section {
   margin: 60px 3% 7%;
 }
 header {
+  position: fixed;
+  top: 0;
+  width: 100%;
   height: 55px;
   background: #eeeeee;
   border-bottom: 1px #dddddd solid;
@@ -87,10 +90,20 @@ header .hongkonglaoma {
   line-height: 55px;
   color: #259dff;
 }
+.article-list {
+  margin-top: 75px;
+}
 .article-list .article-list-item {
   margin-top: 40px;
 }
 .article-list .article-list-item pre {
+  font-size: 14px;
+  line-height: 1.8;
+}
+.article-content {
+  margin-top: 75px;
+}
+.article-content .article-content {
   font-size: 14px;
   line-height: 1.8;
 }

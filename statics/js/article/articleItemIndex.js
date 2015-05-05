@@ -96,6 +96,7 @@ define('article/article_content.js',['require','exports','module','lib/ajax','li
     var articleDetail = React.createClass({displayName: "articleDetail",
         getInitData : function () {
             var queryObj = util.queryParse();
+            var self = this;
             ajax(
                 '/api/article/item' + (
                     (queryObj && queryObj.id) ?
@@ -103,31 +104,35 @@ define('article/article_content.js',['require','exports','module','lib/ajax','li
                 {
                     method: 'get',
                     success: function (data) {
-                        console.log(data);
+                        var JSONData = JSON.parse(data);
+                        if (JSONData && !JSONData.err) {
+                            self.setState({
+                                title: JSONData.ret.title,
+                                content: JSONData.ret.content
+                            });
+                        } else {
+                            alert(data.message);
+                        }
                     }
                 }
             );
         },
         getInitialState: function () {
-            return {articleItemData: {}};
+            return {
+                title: '',
+                content: ''
+            };
         },
         componentDidMount : function () {
             this.getInitData();
         },
         render: function () {
+            console.log(this.state);
             return(
-            React.createElement("div", {className: "article-wraper"}, 
-                React.createElement("div", {className: "article-title"}, 
-                    React.createElement("h1", null, this.props.titleText)
-                ), 
-                React.createElement("p", {className: "article-content"}, 
-                    this.props.contentText
-                ), 
-                React.createElement("div", {className: "creat-time"}, 
-                    this.props.creatTime
-                ), 
-                React.createElement("div", {className: "modify-time"}, 
-                    this.props.modifyTime
+            React.createElement("div", {className: "article-content"}, 
+                React.createElement("h1", {className: "title title1"}, this.state.title), 
+                React.createElement("pre", {className: "article-detail"}, 
+                    this.state.content
                 )
             )
             );
@@ -138,10 +143,30 @@ define('article/article_content.js',['require','exports','module','lib/ajax','li
     };
 })
 ;
-require(['article/article_content.js'], function (content) {
+define('common/header.js',[],function(){
+    var Header = React.createClass({displayName: "Header",
+        render: function(){
+            return (
+                React.createElement("div", null, 
+                    React.createElement("span", {className: "hongkonglaoma title"}, "Hongkonglaoma"), 
+                    React.createElement("div", {className: "common-header-user"}
+                    )
+                )
+            );
+        }
+    });
+
+    return Header;
+});
+
+require(['article/article_content.js', 'common/header.js'], function (content, CommonHeader) {
     React.render(
-        React.createElement(content.articleDetail, {titleText: "test", contentText: "content test", creatTime: "2015-3-28", modifyTime: "2015-3-28"}),
-        document.body
+        React.createElement(CommonHeader, null),
+        document.getElementById('header')
+    );
+    React.render(
+        React.createElement(content.articleDetail, null),
+        document.getElementById('content')
     );
 });
 

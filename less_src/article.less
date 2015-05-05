@@ -2,10 +2,21 @@
 @import "pagetag.less";
 @import "header.less";
 
-.article-list .article-list-item {
-    margin-top: 40px;
-    pre {
+.article-list {
+    margin-top: @header-height + 20;
+    .article-list-item {
+        margin-top: 40px;
+        pre {
+            font-size: 14px;
+            line-height: 1.8;
+        }
+    }
+}
+
+.article-content {
+    margin-top: @header-height + 20;
+    .article-content {
         font-size: 14px;
-        line-height: 1.8;
+        line-height: 1.8
     }
 }

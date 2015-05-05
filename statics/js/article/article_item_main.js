@@ -1,6 +1,10 @@
-require(['article/article_content.js'], function (content) {
+require(['article/article_content.js', 'common/header.js'], function (content, CommonHeader) {
     React.render(
-        React.createElement(content.articleDetail, {titleText: "test", contentText: "content test", creatTime: "2015-3-28", modifyTime: "2015-3-28"}),
-        document.body
+        React.createElement(CommonHeader, null),
+        document.getElementById('header')
+    );
+    React.render(
+        React.createElement(content.articleDetail, null),
+        document.getElementById('content')
     );
 });

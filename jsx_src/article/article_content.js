@@ -4,6 +4,7 @@ define(function (require, exports, module) {
     var articleDetail = React.createClass({
         getInitData : function () {
             var queryObj = util.queryParse();
+            var self = this;
             ajax(
                 '/api/article/item' + (
                     (queryObj && queryObj.id) ?
@@ -11,32 +12,36 @@ define(function (require, exports, module) {
                 {
                     method: 'get',
                     success: function (data) {
-                        console.log(data);
+                        var JSONData = JSON.parse(data);
+                        if (JSONData && !JSONData.err) {
+                            self.setState({
+                                title: JSONData.ret.title,
+                                content: JSONData.ret.content
+                            });
+                        } else {
+                            alert(data.message);
+                        }
                     }
                 }
             );
         },
         getInitialState: function () {
-            return {articleItemData: {}};
+            return {
+                title: '',
+                content: ''
+            };
         },
         componentDidMount : function () {
             this.getInitData();
         },
         render: function () {
+            console.log(this.state);
             return(
-            <div className="article-wraper">
-                <div className="article-title">
-                    <h1>{this.props.titleText}</h1>
-                </div>
-                <p className="article-content">
-                    {this.props.contentText}
-                </p>
-                <div className="creat-time">
-                    {this.props.creatTime}
-                </div>
-                <div className="modify-time">
-                    {this.props.modifyTime}
-                </div>
+            <div className="article-content">
+                <h1 className="title title1">{this.state.title}</h1>
+                <pre className="article-detail">
+                    {this.state.content}
+                </pre>
             </div>
             );
         }

@@ -9,7 +9,7 @@ define(function(require, exports, module){
     // 文章列表项
     var ArticleListItem = React.createClass({
         handleClick: function(ev){
-            console.log(ev);
+            window.location="/article/item?id=" + this.props.id;
         },
         render: function(){
             var content = this.props.children;
@@ -19,8 +19,8 @@ define(function(require, exports, module){
               content = content.slice(0,moreTag);
             }
             return(
-                <div className="article-list-item">
-                    <h2 className="article-list-item-title title title2" onClick={this.handleClick}>{this.props.title}</h2>
+                <div className="article-list-item" onClick={this.handleClick}>
+                    <h2 className="article-list-item-title title title2">{this.props.title}</h2>
                     <pre className="article-list-item-excerpt">
                       {content}
                     </pre>
@@ -34,7 +34,7 @@ define(function(require, exports, module){
         render: function(){
             var listItem = this.props.data.map(function(article, index){
                 return(
-                    <ArticleListItem title={article.title} author={article.author} key={index}>
+                    <ArticleListItem title={article.title} author={article.author} key={index} id={article._id}>
                         {article.content}
                     </ArticleListItem>
                 );

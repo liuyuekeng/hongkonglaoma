@@ -4,6 +4,7 @@ define(function (require, exports, module) {
     var articleDetail = React.createClass({displayName: "articleDetail",
         getInitData : function () {
             var queryObj = util.queryParse();
+            var self = this;
             ajax(
                 '/api/article/item' + (
                     (queryObj && queryObj.id) ?
@@ -11,31 +12,35 @@ define(function (require, exports, module) {
                 {
                     method: 'get',
                     success: function (data) {
-                        console.log(data);
+                        var JSONData = JSON.parse(data);
+                        if (JSONData && !JSONData.err) {
+                            self.setState({
+                                title: JSONData.ret.title,
+                                content: JSONData.ret.content
+                            });
+                        } else {
+                            alert(data.message);
+                        }
                     }
                 }
             );
         },
         getInitialState: function () {
-            return {articleItemData: {}};
+            return {
+                title: '',
+                content: ''
+            };
         },
         componentDidMount : function () {
             this.getInitData();
         },
         render: function () {
+            console.log(this.state);
             return(
-            React.createElement("div", {className: "article-wraper"}, 
-                React.createElement("div", {className: "article-title"}, 
-                    React.createElement("h1", null, this.props.titleText)
-                ), 
-                React.createElement("p", {className: "article-content"}, 
-                    this.props.contentText
-                ), 
-                React.createElement("div", {className: "creat-time"}, 
-                    this.props.creatTime
-                ), 
-                React.createElement("div", {className: "modify-time"}, 
-                    this.props.modifyTime
+            React.createElement("div", {className: "article-content"}, 
+                React.createElement("h1", {className: "title title1"}, this.state.title), 
+                React.createElement("pre", {className: "article-detail"}, 
+                    this.state.content
                 )
             )
             );

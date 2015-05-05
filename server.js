@@ -14,7 +14,8 @@ var MongoClient = mongo.MongoClient;
 var bdconf = require('./conf/db.conf');
 //db
 var db = new MongoDb('blog', new MongoServer(bdconf.remote.host, bdconf.remote.port));
-
+db.authenticate(bdconf.remote.user, bdconf.remote.password, function(err,data){
+});
 
 //======================路由==========================
 //静态文件

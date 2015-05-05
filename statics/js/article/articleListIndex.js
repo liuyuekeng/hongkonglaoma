@@ -264,8 +264,9 @@ define('article/article_list.js',['require','exports','module','lib/ajax','lib/u
         handelChangePage: function(num){
             if(parseInt(num) != parseInt(this.state.selectedPage)){
                 this.setState({
-                    page: parseInt(num)
+                    selectedPage: parseInt(num)
                 });
+                this.componentDidMount();
             }
         },
         render: function(){

@@ -90,8 +90,9 @@ define(function(require, exports, module){
         handelChangePage: function(num){
             if(parseInt(num) != parseInt(this.state.selectedPage)){
                 this.setState({
-                    page: parseInt(num)
+                    selectedPage: parseInt(num)
                 });
+                this.componentDidMount();
             }
         },
         render: function(){

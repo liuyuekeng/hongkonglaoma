@@ -161,7 +161,7 @@ define('article/article_editarea.js',['require','exports','module','lib/ajax','l
         onInput: function (key, val) {
             var stateObj = {};
             stateObj[key] = val;
-            stateObj[key + 'MD'] = this.converter.makeHtml(val);
+            stateObj[key + 'MD'] = this.converter.makeHtml(val.replace(/</g, "&lt;"));
             this.setState(stateObj);
         },
         onSubmit: function () {

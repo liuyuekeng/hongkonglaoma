@@ -69,7 +69,7 @@ define(function (require, exports, module) {
         onInput: function (key, val) {
             var stateObj = {};
             stateObj[key] = val;
-            stateObj[key + 'MD'] = this.converter.makeHtml(val);
+            stateObj[key + 'MD'] = this.converter.makeHtml(val.replace(/</g, "&lt;"));
             this.setState(stateObj);
         },
         onSubmit: function () {

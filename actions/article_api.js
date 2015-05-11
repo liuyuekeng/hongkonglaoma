@@ -42,7 +42,7 @@ articleApi.get('/item', function (req, res) {
 articleApi.use('/new', paramsCheck({
     post: {
         title: {
-            regexp: /\w+/,
+            regexp: /^[^\(\)\\%]+$/,
         },
         content: {
             regexp: /.+/,
@@ -80,7 +80,7 @@ articleApi.post('/new', function (req, res) {
 articleApi.use('/up', paramsCheck({
     post: {
         title: {
-            regexp: /\w+/
+            regexp: /^[^\(\)\\%]+$/,
         },
         content: {
             regexp: /.+/

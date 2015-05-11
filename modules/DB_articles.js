@@ -22,12 +22,14 @@ var Article = function (db) {
             if ( page * length <= total ){
                 return {
                     'err': null,
-                    'data': data.slice((page-1) * length, page * length)
+                    'data': data.slice((page-1) * length, page * length),
+                    'total': total
                 }
             }else{
                 return {
                     'err': null,
-                    'data': data.slice((page-1) * length)
+                    'data': data.slice((page-1) * length),
+                    'total': total
                 }
             }
         }else{
@@ -93,7 +95,7 @@ var Article = function (db) {
         articles.find().toArray(function(err,data){
             if(!err){
                 var pagedCollection = articlesPaging(data, page, length);
-                callback(pagedCollection.err, pagedCollection.data);
+                callback(pagedCollection.err, {list:pagedCollection.data, total:pagedCollection.total});
             }else{
                 callback(err,data);
             }

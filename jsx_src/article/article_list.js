@@ -48,12 +48,17 @@ define(function(require, exports, module){
     });
 
     var Articles = React.createClass({
+        urlParame: {
+            page: util.queryParse().page || 1,
+            length: util.queryParse().length || 5
+        },
         getInitialState: function(){
+            var _this = this;
             return {
                 // 文章列表
                 articleList: [],
                 // 当前页
-                selectedPage: 1,
+                selectedPage: this.urlParame.page,
                 // 总页数
                 totalPage: 1,
                 // 标签列表
@@ -62,14 +67,14 @@ define(function(require, exports, module){
                 selectedTags: []
             };
         },
-        componentDidMount: function(){
+        componentDidMount: function(par){
             var _this = this;
-            var queryObj = util.queryParse();
-            var page = queryObj.page || 1;
-            var length = queryObj.length || 5;
 
+            var page = ((par && par.page) || _this.urlParame.page);
+            var length = ((par && par.length) || _this.urlParame.length);
             var url = 'api/article/list';
-            url += '?page=' + page + '&length=' + length;
+            url += '?page=' + page
+                + '&length=' + length;
             ajax(
                 url,
                 {
@@ -78,9 +83,9 @@ define(function(require, exports, module){
                         var ret = JSON.parse(data);
                         if(!ret.err){
                             _this.setState({
-                                articleList: ret.data,
+                                articleList: ret.data.list,
                                 selectedPage: page,
-                                totalPage: ret.data.length / length + 1
+                                totalPage: ret.data.total / length + 1
                             });
                         }
                     }
@@ -89,10 +94,7 @@ define(function(require, exports, module){
         },
         handelChangePage: function(num){
             if(parseInt(num) != parseInt(this.state.selectedPage)){
-                this.setState({
-                    selectedPage: parseInt(num)
-                });
-                this.componentDidMount();
+                this.componentDidMount({page:num});
             }
         },
         render: function(){

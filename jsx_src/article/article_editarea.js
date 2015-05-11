@@ -13,8 +13,9 @@ define(function (require, exports, module) {
         },
         render: function () {
             return (
-            <div className="input-arear">
+            <div className="input-area">
                 <input
+                    className = "title title1"
                     ref='title'
                     onChange={this.handleTitleChange}
                     value={this.props.title}
@@ -35,9 +36,12 @@ define(function (require, exports, module) {
             var content = this.props.content;
             return (
             <div className="show-area">
-                <h1 dangerouslySetInnerHTML={{__html: title}}></h1>
-                <br />
-                <p dangerouslySetInnerHTML={{__html: content}}></p>
+                <h1
+                    className="title title1"
+                    dangerouslySetInnerHTML={{__html: title}}></h1>
+                <div
+                    className="article-detail"
+                    dangerouslySetInnerHTML={{__html: content}}></div>
             </div>
             );
         }
@@ -45,7 +49,7 @@ define(function (require, exports, module) {
     var SubmitBtn = React.createClass({
         render: function () {
             return (
-            <a onClick={this.props.onSubmit}>Save</a>
+            <a className="btn blue" onClick={this.props.onSubmit}>Save</a>
             );
         }
     });
@@ -157,14 +161,14 @@ define(function (require, exports, module) {
         },
         render: function () {
             return (
-                <div class="editarea">
+                <div className="article-editarea">
                     <InputArea
                         onInput={this.onInput}
                         title={this.state.title}
                         content={this.state.content}
                         />
                     <ShowArea
-                        title={this.state.titleMD}
+                        title={this.state.title}
                         content={this.state.contentMD}/>
                     <SubmitBtn onSubmit={this.onSubmit}/>
                 </div>

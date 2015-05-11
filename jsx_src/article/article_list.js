@@ -19,11 +19,11 @@ define(function(require, exports, module){
               content = content.slice(0,moreTag);
             }
             return(
-                <div className="article-list-item" onClick={this.handleClick}>
-                    <h2 className="article-list-item-title title title2">{this.props.title}</h2>
-                    <pre className="article-list-item-excerpt">
+                <div className="article-list-item">
+                    <h2 className="article-list-item-title title title2"><span onClick={this.handleClick}>{this.props.title}</span></h2>
+                    <div className="article-list-item-excerpt">
                       {content}
-                    </pre>
+                    </div>
                 </div>
             );
         }

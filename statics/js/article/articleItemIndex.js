@@ -106,9 +106,11 @@ define('article/article_content.js',['require','exports','module','lib/ajax','li
                     success: function (data) {
                         var JSONData = JSON.parse(data);
                         if (JSONData && !JSONData.err) {
+                            var title = JSONData.ret.title;
+                            var content = self.converter.makeHtml(JSONData.ret.content);
                             self.setState({
-                                title: JSONData.ret.title,
-                                content: JSONData.ret.content
+                                title: title,
+                                content: content
                             });
                         } else {
                             alert(data.message);
@@ -126,14 +128,13 @@ define('article/article_content.js',['require','exports','module','lib/ajax','li
         componentDidMount : function () {
             this.getInitData();
         },
+        converter: new Showdown.converter(),
         render: function () {
             console.log(this.state);
             return(
             React.createElement("div", {className: "article-content"}, 
                 React.createElement("h1", {className: "title title1"}, this.state.title), 
-                React.createElement("pre", {className: "article-detail"}, 
-                    this.state.content
-                )
+                React.createElement("div", {className: "article-detail", dangerouslySetInnerHTML: {__html: this.state.content}})
             )
             );
         }

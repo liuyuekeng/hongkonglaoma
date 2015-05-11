@@ -193,9 +193,9 @@ define('article/article_list.js',['require','exports','module','lib/ajax','lib/u
               content = content.slice(0,moreTag);
             }
             return(
-                React.createElement("div", {className: "article-list-item", onClick: this.handleClick}, 
-                    React.createElement("h2", {className: "article-list-item-title title title2"}, this.props.title), 
-                    React.createElement("pre", {className: "article-list-item-excerpt"}, 
+                React.createElement("div", {className: "article-list-item"}, 
+                    React.createElement("h2", {className: "article-list-item-title title title2"}, React.createElement("span", {onClick: this.handleClick}, this.props.title)), 
+                    React.createElement("div", {className: "article-list-item-excerpt"}, 
                       content
                     )
                 )

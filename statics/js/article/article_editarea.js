@@ -13,8 +13,9 @@ define(function (require, exports, module) {
         },
         render: function () {
             return (
-            React.createElement("div", {className: "input-arear"}, 
+            React.createElement("div", {className: "input-area"}, 
                 React.createElement("input", {
+                    className: "title title1", 
                     ref: "title", 
                     onChange: this.handleTitleChange, 
                     value: this.props.title
@@ -35,9 +36,12 @@ define(function (require, exports, module) {
             var content = this.props.content;
             return (
             React.createElement("div", {className: "show-area"}, 
-                React.createElement("h1", {dangerouslySetInnerHTML: {__html: title}}), 
-                React.createElement("br", null), 
-                React.createElement("p", {dangerouslySetInnerHTML: {__html: content}})
+                React.createElement("h1", {
+                    className: "title title1", 
+                    dangerouslySetInnerHTML: {__html: title}}), 
+                React.createElement("div", {
+                    className: "article-detail", 
+                    dangerouslySetInnerHTML: {__html: content}})
             )
             );
         }
@@ -45,7 +49,7 @@ define(function (require, exports, module) {
     var SubmitBtn = React.createClass({displayName: "SubmitBtn",
         render: function () {
             return (
-            React.createElement("a", {onClick: this.props.onSubmit}, "Save")
+            React.createElement("a", {className: "btn blue", onClick: this.props.onSubmit}, "Save")
             );
         }
     });
@@ -157,14 +161,14 @@ define(function (require, exports, module) {
         },
         render: function () {
             return (
-                React.createElement("div", {class: "editarea"}, 
+                React.createElement("div", {className: "article-editarea"}, 
                     React.createElement(InputArea, {
                         onInput: this.onInput, 
                         title: this.state.title, 
                         content: this.state.content}
                         ), 
                     React.createElement(ShowArea, {
-                        title: this.state.titleMD, 
+                        title: this.state.title, 
                         content: this.state.contentMD}), 
                     React.createElement(SubmitBtn, {onSubmit: this.onSubmit})
                 )

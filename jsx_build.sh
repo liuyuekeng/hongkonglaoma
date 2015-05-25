@@ -6,4 +6,5 @@ node node_modules/requirejs/bin/r.js -o conf/rjs_login_conf.js optimize=none
 node node_modules/requirejs/bin/r.js -o conf/rjs_article_content_conf.js optimize=none
 node node_modules/requirejs/bin/r.js -o conf/rjs_article_conf.js optimize=none
 node node_modules/requirejs/bin/r.js -o conf/rjs_article_edit_conf.js optimize=none
+node node_modules/requirejs/bin/r.js -o conf/rjs_upload_conf.js optimize=none
 echo '========================rjs end================================='

@@ -5,16 +5,20 @@ var app = express();
 var cookieParser = require('cookie-parser');
 //body
 var bodyParser = require('body-parser');
+var multer = require('multer');
 //mongo
 var mongo = require("mongoskin");
 var MongoServer = mongo.Server;
 var MongoDb = mongo.Db;
 var MongoClient = mongo.MongoClient;
-//conf
+// 数据库配置
 var bdconf = require('./conf/db.conf');
+// 选取远程配置
+var remoteHost = bdconf.remote;
+// var localHost = bdconf.local;
 //db
-var db = new MongoDb('blog', new MongoServer(bdconf.remote.host, bdconf.remote.port));
-db.authenticate(bdconf.remote.user, bdconf.remote.password, function(err,data){
+var db = new MongoDb('blog', new MongoServer(remoteHost.host, remoteHost.port));
+db.authenticate(remoteHost.user, remoteHost.password, function(err,data){
 });
 
 //======================路由==========================
@@ -27,7 +31,8 @@ app.get("/", function (req, res) {
 
 //预处理
 app.use(cookieParser('RSYNK4KF1N4DDIA6'));              //cookie签名秘钥
-app.use(bodyParser.urlencoded({ extended: true }));    //post参数解析
+app.use(bodyParser.urlencoded({ extended: true}));    //post参数解析
+app.use(multer({dest: './tmp/'}));      // 处理 multipart/form-data
 app.all("*", function (req, res, next) {
     req.db = db;
     // 通用方法
@@ -72,6 +77,16 @@ app.use("/api/article", articleApi);
 app.get("/hongkonglaoma", function (req, res) {
     res.send('香港老妈');
 });
+
+// 文件上传页面
+app.get('/upload', function(req, res){
+    res.sendfile(__dirname + '/html/upload.html');
+});
+
+// 上传 api
+var uploadApi = require('./actions/upload_api.js');
+app.use('/api/upload', uploadApi);
+// 占位
 //======================路由 end==========================
 
 /*var testCollection = db.collection('blog', {strict: true});

@@ -105,8 +105,9 @@ define('article/article_editarea.js',['require','exports','module','lib/ajax','l
         },
         render: function () {
             return (
-            React.createElement("div", {className: "input-arear"}, 
+            React.createElement("div", {className: "input-area"}, 
                 React.createElement("input", {
+                    className: "title title1", 
                     ref: "title", 
                     onChange: this.handleTitleChange, 
                     value: this.props.title
@@ -127,9 +128,12 @@ define('article/article_editarea.js',['require','exports','module','lib/ajax','l
             var content = this.props.content;
             return (
             React.createElement("div", {className: "show-area"}, 
-                React.createElement("h1", {dangerouslySetInnerHTML: {__html: title}}), 
-                React.createElement("br", null), 
-                React.createElement("p", {dangerouslySetInnerHTML: {__html: content}})
+                React.createElement("h1", {
+                    className: "title title1", 
+                    dangerouslySetInnerHTML: {__html: title}}), 
+                React.createElement("div", {
+                    className: "article-detail", 
+                    dangerouslySetInnerHTML: {__html: content}})
             )
             );
         }
@@ -137,7 +141,7 @@ define('article/article_editarea.js',['require','exports','module','lib/ajax','l
     var SubmitBtn = React.createClass({displayName: "SubmitBtn",
         render: function () {
             return (
-            React.createElement("a", {onClick: this.props.onSubmit}, "Save")
+            React.createElement("a", {className: "btn blue", onClick: this.props.onSubmit}, "Save")
             );
         }
     });
@@ -249,14 +253,14 @@ define('article/article_editarea.js',['require','exports','module','lib/ajax','l
         },
         render: function () {
             return (
-                React.createElement("div", {class: "editarea"}, 
+                React.createElement("div", {className: "article-editarea"}, 
                     React.createElement(InputArea, {
                         onInput: this.onInput, 
                         title: this.state.title, 
                         content: this.state.content}
                         ), 
                     React.createElement(ShowArea, {
-                        title: this.state.titleMD, 
+                        title: this.state.title, 
                         content: this.state.contentMD}), 
                     React.createElement(SubmitBtn, {onSubmit: this.onSubmit})
                 )
@@ -270,10 +274,30 @@ define('article/article_editarea.js',['require','exports','module','lib/ajax','l
     };
 });
 
-require(['article/article_editarea.js'], function (editarea) {
+define('common/header.js',[],function(){
+    var Header = React.createClass({displayName: "Header",
+        render: function(){
+            return (
+                React.createElement("div", null, 
+                    React.createElement("span", {className: "hongkonglaoma title"}, "Hongkonglaoma"), 
+                    React.createElement("div", {className: "common-header-user"}
+                    )
+                )
+            );
+        }
+    });
+
+    return Header;
+});
+
+require(['article/article_editarea.js', 'common/header.js'], function (editarea, CommonHeader) {
+    React.render(
+        React.createElement(CommonHeader, null),
+        document.getElementById('header')
+    );
     React.render(
         React.createElement(editarea.EditArea, null),
-        document.body
+        document.getElementById('content')
     );
 });
 

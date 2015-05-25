@@ -55,6 +55,11 @@ define('loginpage/login_box',[],function () {
                         var messageObj = {};
                         console.log(JSONData);
                         self.setState({message: JSONData});
+                        if (JSONData && !JSONData.err) {
+                            setTimeout(function () {
+                                window.location = "/article"
+                            }, 500);
+                        }
                     }
                 }
             );

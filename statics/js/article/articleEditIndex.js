@@ -106,18 +106,20 @@ define('article/article_editarea.js',['require','exports','module','lib/ajax','l
         render: function () {
             return (
             React.createElement("div", {className: "input-area"}, 
-                React.createElement("input", {
-                    className: "title title1", 
-                    ref: "title", 
-                    onChange: this.handleTitleChange, 
-                    value: this.props.title
-                }), 
-                React.createElement("br", null), 
-                React.createElement("textarea", {
-                    ref: "content", 
-                    onChange: this.handleContetChange, 
-                    value: this.props.content
-                })
+                React.createElement("section", null, 
+                    React.createElement("input", {
+                        className: "title title1", 
+                        ref: "title", 
+                        onChange: this.handleTitleChange, 
+                        value: this.props.title
+                    }), 
+                    React.createElement("br", null), 
+                    React.createElement("textarea", {
+                        ref: "content", 
+                        onChange: this.handleContetChange, 
+                        value: this.props.content
+                    })
+                )
             )
             );
         }
@@ -128,12 +130,14 @@ define('article/article_editarea.js',['require','exports','module','lib/ajax','l
             var content = this.props.content;
             return (
             React.createElement("div", {className: "show-area"}, 
-                React.createElement("h1", {
-                    className: "title title1", 
-                    dangerouslySetInnerHTML: {__html: title}}), 
-                React.createElement("div", {
-                    className: "article-detail", 
-                    dangerouslySetInnerHTML: {__html: content}})
+                React.createElement("section", null, 
+                    React.createElement("h1", {
+                        className: "title title1", 
+                        dangerouslySetInnerHTML: {__html: title}}), 
+                    React.createElement("div", {
+                        className: "article-detail", 
+                        dangerouslySetInnerHTML: {__html: content}})
+                )
             )
             );
         }

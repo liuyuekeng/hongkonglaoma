@@ -14,18 +14,20 @@ define(function (require, exports, module) {
         render: function () {
             return (
             <div className="input-area">
-                <input
-                    className = "title title1"
-                    ref='title'
-                    onChange={this.handleTitleChange}
-                    value={this.props.title}
-                ></input>
-                <br />
-                <textarea
-                    ref='content'
-                    onChange={this.handleContetChange}
-                    value={this.props.content}
-                ></textarea>
+                <section>
+                    <input
+                        className = "title title1"
+                        ref='title'
+                        onChange={this.handleTitleChange}
+                        value={this.props.title}
+                    ></input>
+                    <br />
+                    <textarea
+                        ref='content'
+                        onChange={this.handleContetChange}
+                        value={this.props.content}
+                    ></textarea>
+                </section>
             </div>
             );
         }
@@ -36,12 +38,14 @@ define(function (require, exports, module) {
             var content = this.props.content;
             return (
             <div className="show-area">
-                <h1
-                    className="title title1"
-                    dangerouslySetInnerHTML={{__html: title}}></h1>
-                <div
-                    className="article-detail"
-                    dangerouslySetInnerHTML={{__html: content}}></div>
+                <section>
+                    <h1
+                        className="title title1"
+                        dangerouslySetInnerHTML={{__html: title}}></h1>
+                    <div
+                        className="article-detail"
+                        dangerouslySetInnerHTML={{__html: content}}></div>
+                </section>
             </div>
             );
         }

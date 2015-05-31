@@ -110,6 +110,7 @@ header .hongkonglaoma {
   vertical-align: top;
   width: 50%;
   min-width: 550px;
+  color: #333;
 }
 .article-editarea .input-area {
   background: #272822;
@@ -118,16 +119,47 @@ header .hongkonglaoma {
 .article-editarea .input-area textarea {
   width: 100%;
   border: none;
+  color: #f8f8f2;
   background: inherit;
 }
 .article-editarea .input-area textarea {
   font-size: 14px;
   line-height: 1.8;
 }
-.article-editarea .input-area textarea h1 {
-  font-size: 36px;
-  border-bottom: 1px solid #eee;
+.article-editarea .show-area .article-detail h1,
+.article-editarea .show-area .article-detail h2,
+.article-editarea .show-area .article-detail h3,
+.article-editarea .show-area .article-detail h4,
+.article-editarea .show-area .article-detail h5,
+.article-editarea .show-area .article-detail h6 {
   font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 0.4em;
+}
+.article-editarea .show-area .article-detail h1,
+.article-editarea .show-area .article-detail h2 {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.3em;
+  margin-top: 0 !important;
+}
+.article-editarea .show-area .article-detail h1 {
+  font-size: 36px;
+}
+.article-editarea .show-area .article-detail h2 {
+  font-size: 28px;
+}
+.article-editarea .show-area .article-detail h3 {
+  font-size: 24px;
+}
+.article-editarea .show-area .article-detail h4 {
+  font-size: 20px;
+}
+.article-editarea .show-area .article-detail h5 {
+  font-size: 16px;
+}
+.article-editarea .show-area .article-detail h6 {
+  font-size: 16px;
+  color: #777;
 }
 .article-list .article-detail,
 .article-content .article-detail,

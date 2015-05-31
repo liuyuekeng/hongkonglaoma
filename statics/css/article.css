@@ -91,6 +91,16 @@ header .hongkonglaoma {
   line-height: 55px;
   color: #259dff;
 }
+.common-fileuploader {
+  position: fixed;
+  border: 2px solid #ddd;
+  width: 500px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  margin-top: -150px;
+  margin-left: -250px;
+}
 .article-list {
   margin-top: 75px;
 }

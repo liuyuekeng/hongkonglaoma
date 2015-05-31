@@ -1,7 +1,10 @@
 define(function (require, exports, module) {
     var ajax = require('lib/ajax');
     var util = require('lib/util');
+    var Fileupload = require('common/file_uploader');
+
     var urlParams = util.queryParse();
+
     var InputArea = React.createClass({
         handleTitleChange: function () {
             var str = this.refs['title'].getDOMNode().value;
@@ -175,6 +178,7 @@ define(function (require, exports, module) {
                         title={this.state.title}
                         content={this.state.contentMD}/>
                     <SubmitBtn onSubmit={this.onSubmit}/>
+                    <Fileupload></Fileupload>
                 </div>
             );
         }

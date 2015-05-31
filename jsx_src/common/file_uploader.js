@@ -63,10 +63,13 @@ define(function(){
         },
         render: function(){
             return (
-                <form encType="multipart/form-data" action="/api/upload" method="post" ref="form">
-                    <input type="file" name="fileuploader_file" ref="file" multiple="multiple" />
-                    <input type="submit" onClick={this.handleSubmit}/>
-                </form>
+                <div className="common-fileuploader">
+                    文件上传
+                    <form action="/api/upload" method="post" ref="form">
+                        <input type="file" name="fileuploader_file" ref="file" multiple="multiple" />
+                        <input type="submit" onClick={this.handleSubmit}/>
+                    </form>
+                </div>
             )
         }
     });

@@ -3,6 +3,14 @@
 @import "header.less";
 @import "fileuploader.less";
 
+#content {
+    position: absolute;
+    top: 55px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
 .article-list {
     margin-top: @header-height + 20;
     .article-list-item {
@@ -15,16 +23,22 @@
 }
 
 .article-editarea {
-    margin-top: @header-height;
+    height: 100%;
     white-space: nowrap;
     .input-area,.show-area {
         display: inline-block;
         vertical-align: top;
         width: 50%;
+        height: 100%;
         min-width: 550px;
         color: #333;
+        section {
+            height: 100%;
+            overflow-y: scroll;
+        }
     }
     .input-area {
+        height: 100%;
         background: #272822;
         input,textarea {
             width: 100%;
@@ -35,6 +49,7 @@
         textarea {
             font-size: 14px;
             line-height: 1.8;
+            overflow: hidden;
         }
     }
     .show-area .article-detail {

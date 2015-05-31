@@ -182,8 +182,13 @@ define('article/article_editarea.js',['require','exports','module','lib/ajax','l
             this.props.onInput('title', str);
         },
         handleContetChange: function () {
+            this.autoHeight();
             var str = this.refs['content'].getDOMNode().value;
             this.props.onInput('content', str);
+        },
+        autoHeight: function () {
+            var DOMNode = this.refs['content'].getDOMNode();
+            DOMNode.style.height = DOMNode.offsetHeight + DOMNode.scrollTop + 'px';
         },
         render: function () {
             return (

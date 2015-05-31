@@ -90,10 +90,92 @@ define('lib/util',['require','exports','module'],function (require, exports, mod
     }
 });
 
-define('article/article_editarea.js',['require','exports','module','lib/ajax','lib/util'],function (require, exports, module) {
+define('common/file_uploader',[],function(){
+    /*
+     * 文件上传组件
+     */
+    
+    var FileUploader = React.createClass({displayName: "FileUploader",
+        handleSubmit: function(ev){
+            ev.preventDefault();
+            var _this = this;
+
+            var inputDom = React.findDOMNode(this.refs.file);
+
+            // 条件过滤
+            if(!inputDom.files || !inputDom.files.length){
+                alert('请先选择文件');
+                return;
+            }
+            if(!window.FormData){
+                console.log('浏览器不支持 FormData 对象');
+                return;
+            }
+            if(!window.XMLHttpRequest){
+                console.log('浏览器不支持 XMLHttpRequest 对象');
+                return;
+            }
+
+            // 读取文件数据
+            var filereader = new FileReader();
+            filereader.addEventListener('load', function(){
+                if(filereader.error){
+                    console.log('error: ' + filereader.error);
+                    return;
+                }
+                _this.sendData(inputDom.files[0], filereader.result);
+            });
+            filereader.readAsBinaryString(inputDom.files[0]);
+        },
+        sendData: function(fileObject, fileContent){     // 拼装数据并发送
+            var XHR = new XMLHttpRequest();
+            var data = '';
+
+            // 拼接数据字符串
+            data += '--blob\r\n';
+            data += 'content-disposition: form-data; '
+                    + 'name="fileuploader"; '
+                    + 'filename="' + fileObject.name + '"\r\n'
+                    + 'Content-Type: ' + fileObject.type + '\r\n'
+                    + '\r\n'
+                    + fileContent + '\r\n'
+                    + '--blob--';
+
+            XHR.addEventListener('load', function(ev){
+                console.log('post data upload success');
+            });
+            XHR.addEventListener('error', function(ev){
+                console.log('post data upload fail');
+            });
+
+            XHR.open('POST', '/api/upload');
+            XHR.setRequestHeader('Content-Type','multipart/form-data; boundary=blob');
+
+            XHR.send(data);
+        },
+        render: function(){
+            return (
+                React.createElement("div", {className: "common-fileuploader"}, 
+                    "文件上传", 
+                    React.createElement("form", {action: "/api/upload", method: "post", ref: "form"}, 
+                        React.createElement("input", {type: "file", name: "fileuploader_file", ref: "file", multiple: "multiple"}), 
+                        React.createElement("input", {type: "submit", onClick: this.handleSubmit})
+                    )
+                )
+            )
+        }
+    });
+
+    return FileUploader;
+});
+
+define('article/article_editarea.js',['require','exports','module','lib/ajax','lib/util','common/file_uploader'],function (require, exports, module) {
     var ajax = require('lib/ajax');
     var util = require('lib/util');
+    var Fileupload = require('common/file_uploader');
+
     var urlParams = util.queryParse();
+
     var InputArea = React.createClass({displayName: "InputArea",
         handleTitleChange: function () {
             var str = this.refs['title'].getDOMNode().value;
@@ -262,7 +344,8 @@ define('article/article_editarea.js',['require','exports','module','lib/ajax','l
                     React.createElement(ShowArea, {
                         title: this.state.title, 
                         content: this.state.contentMD}), 
-                    React.createElement(SubmitBtn, {onSubmit: this.onSubmit})
+                    React.createElement(SubmitBtn, {onSubmit: this.onSubmit}), 
+                    React.createElement(Fileupload, null)
                 )
             );
         }

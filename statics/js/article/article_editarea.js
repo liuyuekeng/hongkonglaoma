@@ -1,7 +1,10 @@
 define(function (require, exports, module) {
     var ajax = require('lib/ajax');
     var util = require('lib/util');
+    var Fileupload = require('common/file_uploader');
+
     var urlParams = util.queryParse();
+
     var InputArea = React.createClass({displayName: "InputArea",
         handleTitleChange: function () {
             var str = this.refs['title'].getDOMNode().value;
@@ -170,7 +173,8 @@ define(function (require, exports, module) {
                     React.createElement(ShowArea, {
                         title: this.state.title, 
                         content: this.state.contentMD}), 
-                    React.createElement(SubmitBtn, {onSubmit: this.onSubmit})
+                    React.createElement(SubmitBtn, {onSubmit: this.onSubmit}), 
+                    React.createElement(Fileupload, null)
                 )
             );
         }

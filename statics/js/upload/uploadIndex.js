@@ -63,9 +63,12 @@ define('common/file_uploader.js',[],function(){
         },
         render: function(){
             return (
-                React.createElement("form", {encType: "multipart/form-data", action: "/api/upload", method: "post", ref: "form"}, 
-                    React.createElement("input", {type: "file", name: "fileuploader_file", ref: "file", multiple: "multiple"}), 
-                    React.createElement("input", {type: "submit", onClick: this.handleSubmit})
+                React.createElement("div", {className: "common-fileuploader"}, 
+                    "文件上传", 
+                    React.createElement("form", {action: "/api/upload", method: "post", ref: "form"}, 
+                        React.createElement("input", {type: "file", name: "fileuploader_file", ref: "file", multiple: "multiple"}), 
+                        React.createElement("input", {type: "submit", onClick: this.handleSubmit})
+                    )
                 )
             )
         }

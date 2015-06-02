@@ -74,6 +74,17 @@ section {
 .message.red {
   color: #ff2525;
 }
+.right-bottom-position {
+  position: fixed !important;
+  bottom: 0;
+  right: 0;
+}
+.option-box {
+  margin: 0 30px 10px 0;
+}
+.hide {
+  display: none;
+}
 .common-pagetag {
   margin: 60px 3% 7%;
 }
@@ -100,6 +111,36 @@ header .hongkonglaoma {
   left: 50%;
   margin-top: -150px;
   margin-left: -250px;
+}
+.option-box {
+  position: relative;
+}
+.option-box .menu {
+  transition: top 0.2s ease-in;
+  position: absolute;
+  top: 40px;
+  right: 45px;
+}
+.option-box .menu.show {
+  top: 0px;
+}
+.option-box .icon {
+  transition: transform 0.5s ease-in;
+  transform: rotate(90);
+}
+.option-box .icon.up {
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}
+.option-box .icon.down {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 #content {
   position: absolute;

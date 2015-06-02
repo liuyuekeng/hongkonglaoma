@@ -90,6 +90,35 @@ define('lib/util',['require','exports','module'],function (require, exports, mod
     }
 });
 
+define('common/option_box.js',[],function() {
+    var OptionBox = React.createClass({displayName: "OptionBox",
+        getInitialState: function () {
+            return {
+                open: false,
+            };
+        },
+        switchState: function () {
+            var open = !this.state.open;
+            this.setState({
+                open: open
+            });
+        },
+        render: function() {
+            return (
+                React.createElement("div", {className: "option-box right-bottom-position"}, 
+                    React.createElement("a", {className: "btn blue icon" + (this.state.open ? ' down' : ' up'), onClick: this.switchState}, 
+                        ">"
+                    ), 
+                    React.createElement("div", {className: "menu" + (this.state.open ? ' show' : '')}, 
+                        this.props.children
+                    )
+                )
+            );
+        }
+    });
+    return OptionBox;
+});
+
 define('common/file_uploader',[],function(){
     /*
      * 文件上传组件
@@ -169,9 +198,10 @@ define('common/file_uploader',[],function(){
     return FileUploader;
 });
 
-define('article/article_editarea.js',['require','exports','module','lib/ajax','lib/util','common/file_uploader'],function (require, exports, module) {
+define('article/article_editarea.js',['require','exports','module','lib/ajax','lib/util','common/option_box.js','common/file_uploader'],function (require, exports, module) {
     var ajax = require('lib/ajax');
     var util = require('lib/util');
+    var OptionBox = require('common/option_box.js');
     var Fileupload = require('common/file_uploader');
 
     var urlParams = util.queryParse();
@@ -353,7 +383,9 @@ define('article/article_editarea.js',['require','exports','module','lib/ajax','l
                     React.createElement(ShowArea, {
                         title: this.state.title, 
                         content: this.state.contentMD}), 
-                    React.createElement(SubmitBtn, {onSubmit: this.onSubmit}), 
+                    React.createElement(OptionBox, null, 
+                        React.createElement(SubmitBtn, {onSubmit: this.onSubmit})
+                    ), 
                     React.createElement(Fileupload, null)
                 )
             );

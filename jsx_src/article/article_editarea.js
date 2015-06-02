@@ -1,6 +1,7 @@
 define(function (require, exports, module) {
     var ajax = require('lib/ajax');
     var util = require('lib/util');
+    var OptionBox = require('common/option_box.js');
     var Fileupload = require('common/file_uploader');
 
     var urlParams = util.queryParse();
@@ -182,7 +183,9 @@ define(function (require, exports, module) {
                     <ShowArea
                         title={this.state.title}
                         content={this.state.contentMD}/>
-                    <SubmitBtn onSubmit={this.onSubmit}/>
+                    <OptionBox>
+                        <SubmitBtn onSubmit={this.onSubmit}/>
+                    </OptionBox>
                     <Fileupload></Fileupload>
                 </div>
             );

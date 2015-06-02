@@ -1,6 +1,7 @@
 define(function (require, exports, module) {
     var ajax = require('lib/ajax');
     var util = require('lib/util');
+    var OptionBox = require('common/option_box.js');
     var Fileupload = require('common/file_uploader');
 
     var urlParams = util.queryParse();
@@ -182,7 +183,9 @@ define(function (require, exports, module) {
                     React.createElement(ShowArea, {
                         title: this.state.title, 
                         content: this.state.contentMD}), 
-                    React.createElement(SubmitBtn, {onSubmit: this.onSubmit}), 
+                    React.createElement(OptionBox, null, 
+                        React.createElement(SubmitBtn, {onSubmit: this.onSubmit})
+                    ), 
                     React.createElement(Fileupload, null)
                 )
             );

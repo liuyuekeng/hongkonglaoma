@@ -12,13 +12,12 @@ define(function() {
             });
         },
         render: function() {
-            var iconText = this.state.open ? '>' : '<';
             return (
                 <div className="option-box right-bottom-position">
-                    <a className="icon btn blue" onClick={this.switchState}>
-                        {iconText}
+                    <a className={"btn blue icon" + (this.state.open ? ' down' : ' up')} onClick={this.switchState}>
+                        >
                     </a>
-                    <div className={"menu" + (this.state.open ? '' : ' hide')}>
+                    <div className={"menu" + (this.state.open ? ' show' : '')}>
                         {this.props.children}
                     </div>
                 </div>

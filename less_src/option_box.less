@@ -1,0 +1,30 @@
+.option-box {
+    position: relative;
+    .menu {
+        transition: top .2s ease-in;
+        position: absolute;
+        top: 40px;
+        right: 45px;
+        &.show {
+            top: 0px;
+        }
+    }
+    .icon {
+        transition: transform .5s ease-in;
+        transform: rotate(90);
+        &.up {
+            -webkit-transform: rotate(-90deg);
+               -moz-transform: rotate(-90deg);
+                -ms-transform: rotate(-90deg);
+                 -o-transform: rotate(-90deg);
+                    transform: rotate(-90deg);
+        }
+        &.down {
+            -webkit-transform: rotate(90deg);
+               -moz-transform: rotate(90deg);
+                -ms-transform: rotate(90deg);
+                 -o-transform: rotate(90deg);
+                    transform: rotate(90deg);
+        }
+    }
+}

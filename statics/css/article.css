@@ -142,6 +142,70 @@ header .hongkonglaoma {
   -o-transform: rotate(90deg);
   transform: rotate(90deg);
 }
+.popup-box {
+  display: none;
+}
+.popup-box.open {
+  display: block;
+}
+.popup-box.mask {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.popup-box .box {
+  position: absolute;
+  width: 600px;
+  left: 50%;
+  top: 10%;
+  margin-left: -300px;
+  min-height: 180px;
+  background: #fff;
+  border: 1px solid #ddd;
+}
+.popup-box .box.size-s {
+  width: 350px;
+  left: 50%;
+  margin-left: -175px;
+}
+.popup-box .box.size-m {
+  width: 450px;
+  left: 50%;
+  margin-left: -225px;
+}
+.popup-box .box.size-l {
+  width: 350px;
+  left: 50%;
+  margin-left: -300px;
+}
+.popup-box .box.size-xl {
+  width: 350px;
+  left: 50%;
+  margin-left: -400px;
+}
+.popup-box .box .box-head {
+  background: #eee;
+  height: 100px;
+  font-size: 14px;
+  line-height: 26px;
+  height: 26px;
+}
+.popup-box .box .box-head .close {
+  float: right;
+  padding: 0px 8px;
+  cursor: pointer;
+}
+.popup-box .box .box-head .close:hover {
+  background: #259dff;
+  color: #fff;
+}
+.popup-box .box .box-head .close:active {
+  background: #1e73b8;
+  color: #fff;
+}
 #content {
   position: absolute;
   top: 55px;

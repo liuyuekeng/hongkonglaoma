@@ -94,7 +94,7 @@ define('common/option_box.js',[],function() {
     var OptionBox = React.createClass({displayName: "OptionBox",
         getInitialState: function () {
             return {
-                open: false,
+                open: false
             };
         },
         switchState: function () {
@@ -198,11 +198,48 @@ define('common/file_uploader',[],function(){
     return FileUploader;
 });
 
-define('article/article_editarea.js',['require','exports','module','lib/ajax','lib/util','common/option_box.js','common/file_uploader'],function (require, exports, module) {
+define('common/popup_box.js',[],function() {
+    var PopupBox = React.createClass({displayName: "PopupBox",
+        getInitialState: function() {
+            return {
+                open: false
+            };
+        },
+        close: function() {
+            this.setState({
+                open: false
+            });
+        },
+        open: function () {
+            this.setState({
+                open: true
+            });
+        },
+        render: function() {
+            return (
+                React.createElement("div", {className: "popup-box mask" + (this.state.open ? ' open' : '')}, 
+                    React.createElement("div", {className: "box"}, 
+                        React.createElement("div", {className: "box-head"}, 
+                            this.props.title, 
+                            React.createElement("span", {className: "close", onClick: this.close}, "X")
+                        ), 
+                        React.createElement("div", {className: "content"}, 
+                            this.props.children
+                        )
+                    )
+                )
+            );
+        }
+    });
+    return PopupBox;
+});
+
+define('article/article_editarea.js',['require','exports','module','lib/ajax','lib/util','common/option_box.js','common/file_uploader','common/popup_box.js'],function (require, exports, module) {
     var ajax = require('lib/ajax');
     var util = require('lib/util');
     var OptionBox = require('common/option_box.js');
     var Fileupload = require('common/file_uploader');
+    var PopupBox = require('common/popup_box.js');
 
     var urlParams = util.queryParse();
 
@@ -386,7 +423,7 @@ define('article/article_editarea.js',['require','exports','module','lib/ajax','l
                     React.createElement(OptionBox, null, 
                         React.createElement(SubmitBtn, {onSubmit: this.onSubmit})
                     ), 
-                    React.createElement(Fileupload, null)
+                    React.createElement(PopupBox, null)
                 )
             );
         }

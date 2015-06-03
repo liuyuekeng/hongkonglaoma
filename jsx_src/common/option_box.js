@@ -2,7 +2,7 @@ define(function() {
     var OptionBox = React.createClass({
         getInitialState: function () {
             return {
-                open: false,
+                open: false
             };
         },
         switchState: function () {

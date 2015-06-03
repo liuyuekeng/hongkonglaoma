@@ -3,6 +3,7 @@ define(function (require, exports, module) {
     var util = require('lib/util');
     var OptionBox = require('common/option_box.js');
     var Fileupload = require('common/file_uploader');
+    var PopupBox = require('common/popup_box.js');
 
     var urlParams = util.queryParse();
 
@@ -186,7 +187,7 @@ define(function (require, exports, module) {
                     <OptionBox>
                         <SubmitBtn onSubmit={this.onSubmit}/>
                     </OptionBox>
-                    <Fileupload></Fileupload>
+                    <PopupBox></PopupBox>
                 </div>
             );
         }
